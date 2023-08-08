@@ -19,25 +19,10 @@ export const Navbarr = () => {
 
   const [isOpen, setIsOpen] = useState(false); // Abre o cierra el panel de opciones cuando estamos en tamañó mobile
   const [mostrar, setMostrar] = useState(false) // muestra btn de login cuando no hay usuario conectado
-  //const [isLog, setIsLog] = useState(user)
-  //const [logBtn, setLogBtn] = useState("navbar-links navbar-login")
-  //const [saludo, setSaludo] = useState("navbar-bienvenida")
- // const [isOpen, setIsOpen] = useState(false);
-  //const nombre_usuario = "Ricardo"
-  //const [isLog, setIsLog] = useState(false)
-  //const [logBtn, setLogBtn] = useState("navbar-links navbar-login")
-  //const [saludo, setSaludo] = useState("navbar-bienvenida show")
-  
 
-
-  //dispatch(getDoctors())
-  console.log("hola")
-  console.log(user)
   useEffect (() => {
     salirTest()
   },[user])
-
-//console.log("mostrar", mostrar, user)
 
   function salirTest() {
     dispatch(getDoctors())

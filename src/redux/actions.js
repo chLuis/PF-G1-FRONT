@@ -144,16 +144,11 @@ export const putDoctor = (doctor, aprobar) => async (dispatch) => {
                     aprobado: aprobar,
                 }
             );
-            console.log(res);
-            console.log(res.data);
-            console.log("esto es res.data");
-
             dispatch({
                 type: PUT_DOCTOR,
                 payload: res.data,
             });
         } catch (err) {
-            console.log("asd");
             console.log(err);
         }
     }
@@ -161,13 +156,10 @@ export const putDoctor = (doctor, aprobar) => async (dispatch) => {
 };
 
 export const deleteDoctor = (id, next) => async (dispatch) => {
-    console.log("ESTOY DELETEDOCTOR DEL FRONT ACTIONS");
     try {
         const res = await axios.delete(
             `http://localhost:8080/doctor/delete/${id}`
         );
-        console.log("res ---->", res);
-        console.log("res.data ---->", res.data);
         next();
         dispatch({
             type: DELETE_DOCTOR,
@@ -193,19 +185,14 @@ export const getPacientes = () => async (dispatch) => {
 export const getPaciente = (id) => async (dispatch) => {
     if (id) {
         try {
-            console.log("estop en getPaciente");
-            console.log(id);
             const res = await axios.get(
                 `http://localhost:8080/paciente/get/${id}`
             );
-            console.log(res.data);
-            console.log("esto es res.data");
             dispatch({
                 type: GET_PACIENTE,
                 payload: res.data,
             });
         } catch (err) {
-            console.log();
             console.log(err);
         }
     }
@@ -332,11 +319,11 @@ export const postPaciente = (user) => async (dispatch) => {
     }
   }
 
+////////////////////////////////// TURNOS //////////////////////////////////
+
+
     export const postTurno = (turno) => async (dispatch) => {
-        console.log("esto es turno");
-        console.log(turno);
         try {
-            console.log("TRY");
             const res = await axios.post(
                 "http://localhost:8080/turno/post",
                 turno
@@ -358,4 +345,32 @@ export const postPaciente = (user) => async (dispatch) => {
             });
         }
     };
+
+    export const getTurnos = () => async (dispatch) => {
+        try {
+            const res = await axios.get(`http://localhost:8080/turno/get/`);
+            dispatch({
+                type: GET_TURNOS,
+                payload: res.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    
+    }
+
+    export const deleteTurno = (id, next) => async (dispatch) => {
+        try {
+            const res = await axios.delete(
+                `http://localhost:8080/turno/delete/${id}`
+            );
+            next();
+            dispatch({
+                type: DELETE_TURNO,
+                payload: res.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    }
 

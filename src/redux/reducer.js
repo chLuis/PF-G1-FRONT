@@ -41,9 +41,9 @@ export const userReducer = (state = inicialStateUser, action) => {
         case GET_USERS:
             return { ...state, users: action.payload };
         case GET_TURNOS:
-            return { ...state, users: action.payload };
+            return { ...state, turnos: action.payload };
         case LOGGED_IN:
-            return {    user: action.payload.nombre || false,
+            return { ...state, user: action.payload.nombre || false,
                         apellido: action.payload.apellido || false,
                         direccion: action.payload.direccion || false,
                         dni: action.payload.dni || false,

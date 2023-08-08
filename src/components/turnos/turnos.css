@@ -4,40 +4,6 @@
     box-sizing: border-box;
 
 }
-.input-group-turns{
-    position: relative;
-    margin: 20px 0;
-    border-bottom: 2px solid #fff;
-}
-.input-group-turns label {
-    position: absolute;
-    top: 50%;
-    left: 5px;
-    transform: translateY(-50%);
-    font-size: 16px;
-    color: #Fff;
-    pointer-events: none;
-    transition: .5s;
-}
-.input-group-turns input{
-    max-width: auto;
-    height: 40px;
-    font-size: 16px;
-    color: #fff;
-    padding: 0 5px;
-    background: transparent;
-    border: none;
-    outline: none;
-    width: 100%;
-}
-.input-group-turns input:focus~label,
-.input-group-turns input:valid~label{
-    top: -5px;
-}
-.input-group-turns input:{
-    color: black !important;
-    background-color: red !important;
-}
 
 .turnos{
     display: flex;
@@ -46,7 +12,7 @@
     min-height: 100vh;
 }
 .select-especialidad-turno{
-    color: rgb(19, 19, 19) !important;
+    color: rgb(235, 235, 235) !important;
 }
 .formularioTurnos{
     position: relative;
@@ -58,12 +24,4 @@
     padding: 40px;
 }
 
-input[type="date"] label {
-    color: #999; /* Color de texto desvanecido */
-    background-color: red;
-  }
-  
-  input[type="date"]:focus::before,
-  input[type="date"]:valid::before {
-    content: ""; /* Eliminar el texto del placeholder cuando se selecciona una fecha */
-  }
+
