@@ -23,7 +23,7 @@ export const SectionDoctors = ({ image, especialidad }) => {
             <div className="card-medic">
                 <div className={frontCard}>
                     <h3>{especialidad}</h3>
-                    <img src={image} alt="foto medico" />
+                    <img className="foto-especialidad" src={image} alt="foto medico" />
                     <button onClick={selectTurn} className="btn-sacar-turnos">
                         Ver médicos
                     </button>
