@@ -1,0 +1,39 @@
+.clima-api {
+    position: absolute;
+    top: 16px;
+    border: 1px solid rgb(8, 8, 8);
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, rgb(38, 27, 117) 0%, rgb(48, 48, 153) 50%, rgba(16, 45, 189, 0.93) 100%);
+    color: rgb(230, 230, 230) !important;
+    font-size: 1.1rem;
+    transform: translateX(0);
+    transition: 0.5s;
+    overflow: hidden;
+}
+.soloTemp{
+    display: none;
+}
+@media (max-width: 1280px) {
+    .clima-api{
+        transform: translateY(-500%) !important;
+    }
+}
+@media (max-width: 1150px) {
+    .clima-api{
+        transform: translateX(000%) !important;
+    }
+    
+}
+@media (max-width: 500px) {
+    .allClima{
+        display: none !important;
+    }
+    .soloTemp{
+        display: inline;
+    }
+}
+
+.fa-temperature-half {
+    color: rgb(230, 230, 230) !important;
+}

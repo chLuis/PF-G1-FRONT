@@ -1,0 +1,114 @@
+.panelUser{
+    min-height: 90dvh;
+    margin-top: 20px;
+}
+
+.panelUserData p {
+    margin: 1px;
+}
+.panelUser-column {
+    display: grid;
+    grid-template-columns: 25% minmax(auto,2fr );
+    gap: 20px;
+}
+.panelUser-column img {
+    max-width: 200px;
+    justify-self: flex-end;
+    padding: 10px 0px;
+}
+.panelUser-column div {
+    background-color: rgba(28, 28, 28, 0.635);
+    border-radius: 10px;
+    text-align: left;
+    padding: 10px;
+    width: 95%;
+}
+
+.panelUser-column h2 {
+    text-decoration: underline;
+}
+
+.columnDoctorsToAprobe{
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    place-items: center !important;
+
+}
+.doctorToApprove{
+    max-width: 85dvw;
+    margin: 3px !important;
+    padding: 0 !important;
+    line-height: 34px;
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 0.5fr;
+    border-bottom: 1px solid black;
+    gap: 4px;
+}
+
+.doctorToApprove:hover{
+    cursor: pointer;
+    transition: 0.15s;
+    background-color: rgb(136, 135, 135) !important;
+}
+.doctorToAprobe span  {
+    margin: auto 0px !important;
+}
+.columnDoctorsToAprobe button{
+    color: rgb(230, 230, 230) !important;
+    background-color: green;
+    padding-inline: 14px;
+    border-radius: 4px;
+}
+.columnDoctorsToAprobe button:hover{
+    color: rgb(230, 230, 230) !important;
+    background-color: rgb(69, 83, 69);
+    padding-inline: 14px;
+    border-radius: 4px;
+}
+.div-btn-showAll-and-input{
+    display: flex;
+    gap: 6px;
+    place-content: center;
+}
+
+.div-btn-showAll-and-input button{
+    width: 140px;
+}
+
+.searchDNI {
+    color: black !important;
+}
+.btn-approve-admin{
+    background-color: rgb(0, 107, 0) !important;
+    width: 86px;
+    height: 38px;
+    align-self: center;
+}
+.btn-delete-admin{
+    background-color: red !important;
+    width: 86px;
+    height: 38px;
+    align-self: center;
+}
+.btn-manage-doc{
+    display: flex;
+    margin: 1px 3px;
+
+}
+
+@media (max-width: 930px) {
+    .panelUser-column img  {
+        display: none;
+    }
+    .panelUser-column div{
+        width: 95dvw;
+        margin: 0px 12px 0px 12px;
+    }
+    .panelUser {
+        margin: auto !important;
+    }
+    .panelUser-column {
+        margin: auto !important;
+    }
+}

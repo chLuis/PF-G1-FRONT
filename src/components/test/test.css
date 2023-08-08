@@ -1,0 +1,39 @@
+.test-title{
+    margin: 10px;
+    text-decoration: underline;
+    color: black !important;
+}
+.test {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: 200px 200px 200px 200px;
+    place-content: center;
+    color: black !important;
+    min-height: 60dvh;
+}
+*{
+    color: white !important;
+}
+
+
+.doctores{
+    display: grid;
+    grid-template-columns: 250px 250px 250px;
+    gap: 10px;
+    margin: 20px;
+    width: fit-content;
+    color: black !important;
+}
+.doctores p {
+    height: 16px;
+    font-size: 1.1rem;
+    color: black !important;
+}
+.doctor{
+    display: grid;
+    border: 1px solid silver;
+    color: black !important;
+}
+.test button{
+    color: black !important;
+}

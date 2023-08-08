@@ -1,0 +1,17 @@
+.cards-doctors-show{
+    margin-top: 30px;
+    display: flex;
+    place-content: center;
+    flex-wrap: wrap !important;
+    gap: 36px;
+    overflow: hidden !important;
+  }
+
+  .especialidades-title{
+    font-size: 3.4rem;
+    margin-top: 40px;
+    filter: drop-shadow(12px 12px 10px black);
+    filter: drop-shadow(-12px -2px 10px black);
+    text-decoration: underline;
+    line-height: 125px;
+  }
