@@ -2,7 +2,7 @@ import "./join.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { getUser } from "../../redux/actions";
+import { getUser, getTurnos } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -18,13 +18,10 @@ export const Join = () => {
 
     useEffect(() => {
         setUsuario(user);
-        console.log("Effect USER", user);
         if (user) {
             setTimeout(() => {
                 Navigate("/");
             }, 1000);
-        } else {
-            console.log("MNOOOOO USEER");
         }
     }, [user]);
 
@@ -45,6 +42,7 @@ export const Join = () => {
             });
         } else {
             dispatch(getUser(dni, password));
+            dispatch(getTurnos())
         }
     };
 
