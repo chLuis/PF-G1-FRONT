@@ -6,7 +6,7 @@ export const Error404 = () => {
     useEffect(() => {
         const timeout = setTimeout(() => {
             window.history.back()
-        }, 10000);
+        }, 5000);
         return () => clearTimeout(timeout);}) 
     return (
         <div className='pagina-404'>
