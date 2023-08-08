@@ -32,7 +32,7 @@ export const Footerr = () => {
             </div>
             <div className="sb__footer-links_div">
                 <h4>Información General</h4>
-                <Link to="/contact">
+                <Link to="/AboutUs">
                     <p>¿Quines Somos?</p>
                 </Link>
                 <Link to="/error404">

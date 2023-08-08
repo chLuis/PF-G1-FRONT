@@ -2,10 +2,12 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { postDoctor } from '../../redux/actions';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 export const RegisterDoc = () => {
     const dispatch = useDispatch();
+    const Navigate = useNavigate()
 
     const [nombre, setNombre] = useState('')
     const [apellido, setApellido] = useState('')
@@ -151,6 +153,9 @@ export const RegisterDoc = () => {
         setEspecialidad('');
         setPassword('');  
         setPasswordRepeat('');
+        setTimeout(() => {
+            Navigate("/");
+        }, 1000)
       };
 
       const [isFocusedDate, setIsFocusedDate] = useState(false);

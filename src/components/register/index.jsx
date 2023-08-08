@@ -99,11 +99,11 @@ export const Register = () => {
               })
               return
         }
-        if ( password.length > 20 ){
+        if ( password.length > 20 && password.length < 6 ){
             Swal.fire({
                 icon: 'error',
                 title: 'CONTRASEÑA: datos incorrectos!',
-                text: 'La contraseña debe tener como máximo 20 caracteres.'
+                text: 'La contraseña debe tener entre 6 y 20 caracteres.'
               })
               return
         }

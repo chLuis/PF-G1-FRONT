@@ -28,6 +28,17 @@
     text-decoration: underline;
 }
 
+.turnos-panel-show{
+    max-width: 85dvw;
+    margin: 3px !important;
+    padding: 0 !important;
+    line-height: 34px;
+    display: grid;
+    grid-template-columns: 4fr 0.5fr;
+    border-bottom: 1px solid black;
+    gap: 4px;
+}
+
 .columnDoctorsToAprobe{
     width: 100% !important;
     display: flex;
@@ -45,7 +56,7 @@
     border-bottom: 1px solid black;
     gap: 4px;
 }
-
+.turnos-panel-show:hover,
 .doctorToApprove:hover{
     cursor: pointer;
     transition: 0.15s;

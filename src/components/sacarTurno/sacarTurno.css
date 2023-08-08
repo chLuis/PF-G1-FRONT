@@ -6,8 +6,8 @@
 .turnos-float {
     border-radius: 20px;
     background-color: rgba(23, 146, 19, 0.999);
-    border: 2px solid rgba(23, 146, 19, 0.999);
-    min-width: 200px;
+    border: 2px solid rgba(245, 246, 245, 0.999);
+    min-width: 140px;
     min-height: 40px;
     vertical-align: middle;
     display: flex;
@@ -20,6 +20,8 @@
     margin: 0px 20px 36px 0px;
     overflow: hidden;
     transition: 0.3s ease-in;
+    letter-spacing: 1px;
+    font-weight: bold;
 }
 .sacarTurno :nth-child(1) {
     padding: 10px;
@@ -44,8 +46,8 @@
     text-decoration: underline;
     background-color: rgba(30, 174, 25, 0.999);
     box-shadow: -100px -100px 1px 2200px rgba(0, 0, 0, 0.25);
-    letter-spacing: 1px;
     border: 2px solid white;
+    letter-spacing: 2px;
 }
 .sacarTurno button {
     margin-top: 6px;
