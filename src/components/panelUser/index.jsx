@@ -3,15 +3,12 @@ import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
     getDoctors,
-    getDoctor,
     putDoctor,
     deleteDoctor,
-    getPacientes,
-    getPaciente,
     getUsers,
-    getUser,
     deleteUser,
-    logoutUser,
+    deleteTurno,
+    getTurnos
 } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
@@ -34,13 +31,15 @@ export const PanelUser = () => {
     } = useSelector((state) => state.userReducer);
     const doctors = useSelector((state) => state.userReducer.doctors);
     const users = useSelector((state) => state.userReducer.users);
+    const turnos = useSelector((state) => state.userReducer.turnos);
     const [listDoctorsForAprobe, setListDoctorsForAprobe] = useState(false);
     const [listUsersShow, setListUsersShow] = useState(false);
     const [dniSearch, SetDniSearch] = useState(false);
     const [dniSearchUser, setDniSearchUser] = useState(false);
     const [userImage, setUserImage] = useState("")
+    const [paciente, setPaciente] = useState()
 
-
+    console.log(turnos)
     //Muestra la lista de doctores que necesitan aprobacion para figurar en tarjetas de entrada
     function showDoctorForAprobe() {
         dispatch(getDoctors())
@@ -107,6 +106,11 @@ export const PanelUser = () => {
                 }
             });
     }
+    let foundedUser
+    if (dni) {
+        foundedUser = users.find(user => user.dni === dni);
+      }
+    let foundUser = foundedUser.id_user.toString()
 
     //Funcion para borrar un usuario de la base de datos 
     async function deleteUserSelected(user) {
@@ -137,7 +141,6 @@ export const PanelUser = () => {
                         "Este usuario se ha conservado",
                         "info"
                     );
-                    console.log("ESTOY EN DELETE DEL BTN de user");
                 }
             });
     }
@@ -185,6 +188,38 @@ export const PanelUser = () => {
         setListUsersShow(!listUsersShow);
     }
 
+    //Funcion para borrar un turno
+    async function borrarTurno(turno) {
+            swalWithBootstrapButtons
+                .fire({
+                    title: "¿Estas seguro?",
+                    text: "Vas a borrar a este turno",
+                    icon: "info",
+                    showCancelButton: true,
+                    confirmButtonText: "Si! Borrar!",
+                    cancelButtonText: "No, conservar!",
+                    reverseButtons: true,
+                })
+                .then(async (result) => {
+                    if (result.isConfirmed) {
+                        let turnoId = turno._id;
+                        await dispatch(deleteTurno(turnoId));
+                        dispatch(getTurnos());
+                        swalWithBootstrapButtons.fire(
+                            "Borrado!",
+                            "Has borrado este turno.",
+                            "success"
+                        );
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        swalWithBootstrapButtons.fire(
+                            "Cancelado",
+                            "Este turno se ha conservado",
+                            "info"
+                        );
+                    }
+                });
+        }
+    
     //Actualiza el doc como aprobado
     async function refreshDoctors(doctorId, aprobado) {
         await dispatch(putDoctor(doctorId, aprobado));
@@ -218,9 +253,13 @@ export const PanelUser = () => {
                                     : false}
                             </p>
                             <p>Administrador: {admin ? "Si" : "No"}   ------- Esto se saca</p>
+                            {turnos &&<>
                             <h4>Turnos</h4>
-                            <p>Turno 1</p>
-                            <p>Turno 2</p>
+                            {turnos?.map((turno, i) => turno.paciente_id === foundUser
+                            ? <><p key={i}>Fecha: {turno.fecha.split("T")[0]}, Horas: {turno.horario}:00 Especialidad: {turno.especialidad} Dr. {turno.doctorNombre} </p> <button onClick={() => borrarTurno(turno)}>❌</button></>
+                            : null
+                            
+                            )}</>}
                         </div>
 
                         {admin && (
