@@ -256,7 +256,6 @@ export const PanelUser = () => {
                                     ? fechaNacimiento.split("T")[0]
                                     : false}
                             </p>
-                            <p>Administrador: {admin ? "Si" : "No"}   ------- Esto se saca</p>
                             {turnos &&<>
                             <h4>Turnos</h4>
                             {turnos?.map((turno, i) => turno.paciente_id === foundUser
