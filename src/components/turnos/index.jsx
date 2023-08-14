@@ -53,6 +53,8 @@ export const Turnos = () => {
         e.preventDefault();
         let fechaDate = new Date(fecha);
         let currentDate = new Date();
+        let maxDate = new Date();
+        maxDate.setDate(currentDate.getDate() + 30); 
         if(fechaDate <= currentDate){
             Swal.fire({
                 icon: 'error',
@@ -60,6 +62,14 @@ export const Turnos = () => {
                 text: 'La fecha debe ser dias posteriores al actual.',
               })
               return
+        }
+        if (fechaDate > maxDate) {
+            Swal.fire({
+                icon: 'error',
+                title: 'FECHA: datos incorrectos!',
+                text: 'La fecha no puede ser posterior a 30 días a partir de hoy.',
+            });
+            return;
         }
         const turno = {
             dniPaciente: dni,

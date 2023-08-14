@@ -4,9 +4,11 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 import { postPaciente } from '../../redux/actions';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 export const Register = () => {
     const dispatch = useDispatch();
+    const Navigate = useNavigate();
 
     const [nombre, setNombre] = useState('')
     const [apellido, setApellido] = useState('')
@@ -83,13 +85,23 @@ export const Register = () => {
         }
         const fechaNacimientoDate = new Date(fechaNacimiento);
         const currentDate = new Date();
+        const edadMaxima = new Date();
+        edadMaxima.setFullYear(edadMaxima.getFullYear() - 100);
+        console.log("edadMaxima",edadMaxima);
         if (fechaNacimientoDate > currentDate) {
             Swal.fire({
                 icon: 'error',
                 title: 'FECHA DE NACIMIENTO: datos incorrectos!',
-                text: 'La fecha de nacimiento debe ser una fecha válida.',
+                text: 'La fecha de nacimiento no puede ser posterior a la actual.',
               })
               return
+        } else if (fechaNacimientoDate < edadMaxima) {
+            Swal.fire({
+                icon: 'error',
+                title: 'FECHA DE NACIMIENTO: datos incorrectos!',
+                text: 'La fecha de nacimiento no puede ser mayor a 100 años.',
+            });
+            return
         }
         if (!isNaN(obra) || !/^[\p{L}\s]+$/u.test(obra)) {
             Swal.fire({
@@ -132,7 +144,7 @@ export const Register = () => {
             dispatch(postPaciente(user))
         }
     
-        /* setNombre('');
+        setNombre('');
         setApellido('');
         setDni('');
         setDireccion('');
@@ -141,7 +153,10 @@ export const Register = () => {
         setFechaNacimiento('');
         setObra('');
         setPassword('');
-        setPasswordRepeat(''); */
+        setPasswordRepeat('');
+        setTimeout(() => {
+            Navigate("/");
+        }, 5000) 
       };
     
       const [isFocused, setIsFocused] = useState(false);

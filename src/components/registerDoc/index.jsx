@@ -2,12 +2,12 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { postDoctor } from '../../redux/actions';
-import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 export const RegisterDoc = () => {
     const dispatch = useDispatch();
-    const Navigate = useNavigate()
+    const Navigate = useNavigate();
 
     const [nombre, setNombre] = useState('')
     const [apellido, setApellido] = useState('')
@@ -85,13 +85,22 @@ export const RegisterDoc = () => {
         }
         const fechaNacimientoDate = new Date(fechaNacimiento);
         const currentDate = new Date();
+        const edadMaxima = new Date();
+        edadMaxima.setFullYear(edadMaxima.getFullYear() - 100);
         if (fechaNacimientoDate > currentDate) {
             Swal.fire({
                 icon: 'error',
                 title: 'FECHA DE NACIMIENTO: datos incorrectos!',
-                text: 'La fecha de nacimiento debe ser una fecha válida.',
+                text: 'La fecha de nacimiento no puede ser posterior a la actual.',
               })
               return
+        } else if (fechaNacimientoDate < edadMaxima) {
+            Swal.fire({
+                icon: 'error',
+                title: 'FECHA DE NACIMIENTO: datos incorrectos!',
+                text: 'La fecha de nacimiento no puede ser mayor a 100 años.',
+            });
+            return
         }
         if ( matricula.length < 0 || matricula.length > 12 || matricula <= 0 ){
             Swal.fire({
@@ -137,11 +146,11 @@ export const RegisterDoc = () => {
             especialidad: especialidad,
             password: password
         }
-
+        
         if(user){
             dispatch(postDoctor(user))
         }
-        
+
         setNombre('');
         setApellido('');
         setDni('');
@@ -152,10 +161,10 @@ export const RegisterDoc = () => {
         setmatricula('');
         setEspecialidad('');
         setPassword('');  
-        setPasswordRepeat('');
+        setPasswordRepeat(''); 
         setTimeout(() => {
             Navigate("/");
-        }, 1000)
+        }, 5000) 
       };
 
       const [isFocusedDate, setIsFocusedDate] = useState(false);
