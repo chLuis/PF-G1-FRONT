@@ -2,9 +2,12 @@ import "./turnos.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { postTurno, getTurnos } from "../../redux/actions";
+import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 export const Turnos = () => {
     const dispatch = useDispatch();
+    const Navigate = useNavigate();
 
     const doctors = useSelector((state) => state.userReducer.doctors);
     const user = useSelector((state) => state.userReducer.dni);
@@ -16,6 +19,7 @@ export const Turnos = () => {
     const [fecha, setFecha] = useState("");
     const [hora, setHora] = useState("");
     const [motivo, setMotivo] = useState("");
+    const [isFocusedDate, setIsFocusedDate] = useState(false);
 
     useEffect(() => {
         dispatch(getTurnos());
@@ -47,6 +51,26 @@ export const Turnos = () => {
 
     function turnoSet(e) {
         e.preventDefault();
+        let fechaDate = new Date(fecha);
+        let currentDate = new Date();
+        let maxDate = new Date();
+        maxDate.setDate(currentDate.getDate() + 30); 
+        if(fechaDate <= currentDate){
+            Swal.fire({
+                icon: 'error',
+                title: 'FECHA: datos incorrectos!',
+                text: 'La fecha debe ser dias posteriores al actual.',
+              })
+              return
+        }
+        if (fechaDate > maxDate) {
+            Swal.fire({
+                icon: 'error',
+                title: 'FECHA: datos incorrectos!',
+                text: 'La fecha no puede ser posterior a 30 días a partir de hoy.',
+            });
+            return;
+        }
         const turno = {
             dniPaciente: dni,
             especialidad: especialidadSeleccionadaInput,
@@ -56,6 +80,9 @@ export const Turnos = () => {
             motivo: motivo,
         };
         turno ? dispatch(postTurno(turno)) : null;
+        setTimeout(() => {
+            Navigate("/");
+        }, 2000)
     }
     const turnosOcupados = [];
     turnos?.forEach((turno) => {
@@ -70,14 +97,14 @@ export const Turnos = () => {
 
     return (
         <div className="turnos form-wrapper">
-            <form className="formularioTurnos" onSubmit={turnoSet}>
+            {!user && <h2 className="formularioNoLog">Inicia Sesión para solicitar un turno</h2>}
+            {user &&<form className="formularioTurnos" onSubmit={turnoSet}>
                 <h2>Solicitar Turno</h2>
                 <div className="input-group">
                     <div className="input-group">
                         <input type="text" required value={user} disabled />
-                        <label></label>
+                        <label className="hora-label">DNI</label>
                     </div>
-                    <label>Tipo de Consulta</label>
                     <select
                         type="text"
                         className="select-especialidad-turno"
@@ -96,8 +123,7 @@ export const Turnos = () => {
                         <option value="Traumatología">Traumatología</option>
                     </select>
                 </div>
-                <div>
-                    <label>Medico</label>
+                {especialidadSeleccionadaInput &&<div className="input-group">
                     <select
                         type="text"
                         className="select-especialidad-turno"
@@ -119,22 +145,22 @@ export const Turnos = () => {
                             ) : null
                         )}
                     </select>
-                </div>
+                </div>}
                 {idDoctorElegido && (
-                    <div className="input-group">
+                    <div className="input-group-date">
                         <input
                             type="date"
                             required
+                            className={`date-input-turn`}
                             onChange={handleFecha}
                             placeholder="Selecciona una fecha"
                         />
-                        <label>Fecha</label>
+                        <label className={`date-label-turn`}>Fecha</label>
                     </div>
                 )}
                 {fecha && (
                     <div className="input-group">
-                        <label>Hora</label>
-
+                        <label className="hora-label">Hora</label>
                         <select
                             required
                             defaultValue={"Selecciona un horario"}
@@ -167,7 +193,7 @@ export const Turnos = () => {
                     <label>Observaciones</label>
                 </div>
                 <button type="submit">Solicitar</button>
-            </form>
+            </form>}
         </div>
     );
 };

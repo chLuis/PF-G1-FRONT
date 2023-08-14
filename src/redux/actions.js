@@ -21,20 +21,31 @@ export const postDoctor = (user) => async (dispatch) => {
     try {
         const existingDoctor = await axios.get(
             `http://localhost:8080/doctor/get/`
-        ); //peticion de la data
+        ); //peticion de la data doctor
+
+        const existingPaciente = await axios.get(
+            `http://localhost:8080/paciente/get/`
+        ); //peticion de la data p○ciente
+
         const matriculaIngresada = parseInt(user.matricula); // convertir matricula ingresada string a number
         const matriculas = Object.values(existingDoctor.data).map(
             (doctor) => doctor.matricula
         ); //mapeo para obtener todas la matriculas de la data
-        const emails = Object.values(existingDoctor.data).map(
+        const emailsDoc = Object.values(existingDoctor.data).map(
             (doctor) => doctor.mail
         );
-        const arrayDni = Object.values(existingDoctor.data).map(
+        const emailsPac = Object.values(existingPaciente.data).map(
+            (pac) => pac.usuario.mail
+        );
+        const arrayDniDoc = Object.values(existingDoctor.data).map(
             (doctor) => doctor.dni
+        );
+        const arrayDniPac = Object.values(existingPaciente.data).map(
+            (pac) => pac.usuario.dni
         );
         const dniIngresado = parseInt(user.dni);
 
-        if (arrayDni.includes(dniIngresado)) {
+        if (arrayDniDoc.includes(dniIngresado) || arrayDniPac.includes(dniIngresado)) {
             //validacion si el dni ingresado coincide con dni de la data salta el error
             Swal.fire({
                 icon: "error",
@@ -43,7 +54,7 @@ export const postDoctor = (user) => async (dispatch) => {
             });
             return;
         }
-        if (emails.includes(user.mail)) {
+        if (emailsDoc.includes(user.mail) || emailsPac.includes(user.mail)) {
             //validacion si la matricula ingresada coincide con matriculas de la data salta el error
             Swal.fire({
                 icon: "error",
@@ -66,7 +77,7 @@ export const postDoctor = (user) => async (dispatch) => {
         dispatch({
             type: POST_DOCTOR,
             payload: res.data,
-        });
+        }); 
         Swal.fire({
             icon: "success",
             title: "Registro Doctor Exitoso!",
@@ -265,20 +276,29 @@ export const deleteUser = (id, next) => async (dispatch) => {
 
 export const postPaciente = (user) => async (dispatch) => {
     try {
-        const existingPaciente = await axios.get(
-            "http://localhost:8080/paciente/get/"
-        ); //peticion de la data
-        console.log(existingPaciente.data);
+        const existingDoctor = await axios.get(
+            `http://localhost:8080/doctor/get/`
+        ); //peticion de la data doctor
 
-        const emails = Object.values(existingPaciente.data).map(
-            (paciente) => paciente.usuario.mail
+        const existingPaciente = await axios.get(
+            `http://localhost:8080/paciente/get/`
+        ); //peticion de la data p○ciente
+
+        const emailsDoc = Object.values(existingDoctor.data).map(
+            (doctor) => doctor.mail
         );
-        const arrayDni = Object.values(existingPaciente.data).map(
-            (paciente) => paciente.usuario.dni
+        const emailsPac = Object.values(existingPaciente.data).map(
+            (pac) => pac.usuario.mail
+        );
+        const arrayDniDoc = Object.values(existingDoctor.data).map(
+            (doctor) => doctor.dni
+        );
+        const arrayDniPac = Object.values(existingPaciente.data).map(
+            (pac) => pac.usuario.dni
         );
         const dniIngresado = parseInt(user.dni);
 
-        if (arrayDni.includes(dniIngresado)) {
+        if (arrayDniDoc.includes(dniIngresado) || arrayDniPac.includes(dniIngresado)) {
             //validacion si el dni ingresado coincide con dni de la data salta el error
             Swal.fire({
                 icon: "error",
@@ -287,7 +307,7 @@ export const postPaciente = (user) => async (dispatch) => {
             });
             return;
         }
-        if (emails.includes(user.mail)) {
+        if (emailsDoc.includes(user.mail) || emailsPac.includes(user.mail)) {
             //validacion si la matricula ingresada coincide con matriculas de la data salta el error
             Swal.fire({
                 icon: "error",
@@ -296,7 +316,7 @@ export const postPaciente = (user) => async (dispatch) => {
             });
             return;
         }
-
+        
         const res = await axios.post(
             "http://localhost:8080/paciente/post",
             user
@@ -373,4 +393,3 @@ export const postPaciente = (user) => async (dispatch) => {
             console.log(err);
         }
     }
-

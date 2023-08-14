@@ -4,24 +4,90 @@
     box-sizing: border-box;
 
 }
-
+.formularioNoLog{
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 3rem !important;
+}
 .turnos{
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
+    min-height: 90vh;
+}
+.date-input-turn{
+    color: white !important;
+    display: flex;
+}
+.date-input-turn[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+    border-radius: 50%;
+    padding: 4px;
+  }
+
+.date-label-turn {
+    transform: translateY(-130%) !important;
 }
 .select-especialidad-turno{
     color: rgb(235, 235, 235) !important;
 }
 .formularioTurnos{
     position: relative;
-    width: 800px;
-    height: 650px;
+    max-width: 1200px;
+    max-height: 850px;
     background-color: rgba(0, 0, 0, .5);
     border-radius: 20px;
     box-shadow: 0 0 50px rgba(0, 0, 0, .1);
     padding: 40px;
 }
+.hora-label{
+    transform: translateY(-130%) !important;
+}
 
+.input-group-date {
+    position: relative;
+    margin: 20px 0;
+    border-bottom: 2px solid #fff;
+}
 
+.input-group-date label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 16px;
+    color: #Fff;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.input-group-date input, select{
+    max-width: 100dvw;
+    height: 40px;
+    font-size: 16px;
+    color: #fff;
+    padding: 0 5px;
+    background: transparent;
+    border: none;
+    outline: none;
+}
+@media screen and (max-width: 600px) {
+    .form-wrapper .wrapper2 {
+        margin:0 10px 0 10px;
+    }
+}
+
+@media screen and (max-width: 311px) {
+
+    .form-wrapper{
+        height: 600px;
+    }
+}
+
+@media screen and (max-width: 200px) {
+
+    .form-wrapper{
+        height: 750px;
+    }
+}

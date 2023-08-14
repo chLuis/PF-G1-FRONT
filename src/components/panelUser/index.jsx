@@ -37,9 +37,8 @@ export const PanelUser = () => {
     const [dniSearch, SetDniSearch] = useState(false);
     const [dniSearchUser, setDniSearchUser] = useState(false);
     const [userImage, setUserImage] = useState("")
-    const [paciente, setPaciente] = useState()
+    //const [paciente, setPaciente] = useState()
 
-    console.log(turnos)
     //Muestra la lista de doctores que necesitan aprobacion para figurar en tarjetas de entrada
     function showDoctorForAprobe() {
         dispatch(getDoctors())
@@ -67,7 +66,7 @@ export const PanelUser = () => {
                     );
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
-                        "Cancelado",
+                        "Acción cancelada",
                         "No aprobaste esta cuenta como Medico autorizado",
                         "error"
                     );
@@ -98,7 +97,7 @@ export const PanelUser = () => {
                     );
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
-                        "Cancelado",
+                        "Acción cancelada",
                         "Este doctor sigue en la base de datos",
                         "info"
                     );
@@ -106,11 +105,16 @@ export const PanelUser = () => {
                 }
             });
     }
-    let foundedUser
-    if (dni) {
-        foundedUser = users.find(user => user.dni === dni);
-      }
-    let foundUser = foundedUser.id_user.toString()
+    let foundedUser, foundUser
+    if (dni && users != []) {
+        foundedUser = users?.find(user => user.dni === dni);
+    }
+    if(foundedUser) {
+        foundUser = foundedUser.id_user?.toString()
+    }
+    useEffect(() => {
+        dispatch(getTurnos())
+    },[])
 
     //Funcion para borrar un usuario de la base de datos 
     async function deleteUserSelected(user) {
@@ -137,7 +141,7 @@ export const PanelUser = () => {
                     );
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
-                        "Cancelado",
+                        "Acción cancelada",
                         "Este usuario se ha conservado",
                         "info"
                     );
@@ -212,7 +216,7 @@ export const PanelUser = () => {
                         );
                     } else if (result.dismiss === Swal.DismissReason.cancel) {
                         swalWithBootstrapButtons.fire(
-                            "Cancelado",
+                            "Acción cancelada",
                             "Este turno se ha conservado",
                             "info"
                         );
@@ -229,7 +233,7 @@ export const PanelUser = () => {
 
     return (
         <div className="panelUser">
-        {!user &&<div>Debe logearse</div>}
+        {!user &&<h2>Debe ingresar con su cuenta</h2>}
             {user &&<div>
                 <div className="panelUser-column">
                     <img
@@ -252,11 +256,10 @@ export const PanelUser = () => {
                                     ? fechaNacimiento.split("T")[0]
                                     : false}
                             </p>
-                            <p>Administrador: {admin ? "Si" : "No"}   ------- Esto se saca</p>
                             {turnos &&<>
                             <h4>Turnos</h4>
                             {turnos?.map((turno, i) => turno.paciente_id === foundUser
-                            ? <><p key={i}>Fecha: {turno.fecha.split("T")[0]}, Horas: {turno.horario}:00 Especialidad: {turno.especialidad} Dr. {turno.doctorNombre} </p> <button onClick={() => borrarTurno(turno)}>❌</button></>
+                            ? <div className="turnos-panel-show" key={i}><p>Fecha(aaaa/mm/dd): {turno.fecha.split("T")[0]}, Hs: {turno.horario}:00 Espec.: {turno.especialidad} -  Dr. {turno.doctorNombre} </p> <button className="btn-delete-admin" onClick={() => borrarTurno(turno)}>Cancelar</button></div>
                             : null
                             
                             )}</>}
@@ -378,7 +381,7 @@ export const PanelUser = () => {
                                             return null; // O podrías renderizar un mensaje "no hay coincidencia" si lo prefieres
                                         }
                                     })}                                   
-                                <h2>Usuarios</h2>
+                                <h4>Usuarios</h4>
                                 <div className="div-btn-showAll-and-input">
                                 <button onClick={showAllUsers}>
                                 {listUsersShow

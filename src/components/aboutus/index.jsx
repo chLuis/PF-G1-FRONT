@@ -11,7 +11,7 @@ export const AboutUs = () => {
         <div>
           <ul className="team">
             <li>
-              <img src="https://i.ibb.co/SN9nnRK/luis.jpg" alt="Luis Chrestia"  className="avatar-container"/>
+              <img src="https://i.ibb.co/rvfGqpB/PF.jpg" alt="Luis Chrestia"  className="avatar-container"/>
               <h2>Luis Chrestia</h2>
             </li>
             <li>

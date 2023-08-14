@@ -5,8 +5,10 @@
 }
 .especialidad-back{
     color: black !important;
-    
-    
+}
+.foto-especialidad{
+    height: 210px !important;
+    width: 210px !important;
 }
 .card-medic {
     position: relative;

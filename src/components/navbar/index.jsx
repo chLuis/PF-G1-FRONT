@@ -9,11 +9,13 @@ import { useEffect, useState } from 'react';
 import { ClimaApi } from '../climaAPI/index.jsx';
 import { useSelector, useDispatch } from "react-redux";
 import { getDoctors, logoutUser } from '../../redux/actions';
+import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 export const Navbarr = () => { 
   
   const dispatch = useDispatch();
+  const Navigate = useNavigate();
   const {user} = useSelector((state) => state.userReducer) || "";
   
 
@@ -39,8 +41,9 @@ export const Navbarr = () => {
         icon: 'success',
         title: 'Desconectado',
       })
-      return window.location.reload()
-    }
+      return Navigate('/')
+  }
+    
 
   return (
     <Navbar className="m-0 navbar-bg">
