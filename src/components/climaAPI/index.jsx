@@ -6,8 +6,10 @@ export const ClimaApi = () => {
   const [temperature, setTemperature] = useState('Cargando...');
   const [onlyTemp, setOnlyTemp] = useState('Cargando...');
 
+
+
   useEffect(() => {
-    const apiKey = 'a136bf3138f0106c0aea03c4087eb0fc'; // Reemplaza  con tu clave de API de OpenWeatherMap
+    const apiKey = import.meta.env.VITE_apiKeyNumber; // Reemplaza  con tu clave de API de OpenWeatherMap
     const city = 'San Miguel de Tucuman'; // Reemplaza con el nombre de la ciudad para la que deseas obtener la temperatura
     const apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
@@ -20,6 +22,7 @@ export const ClimaApi = () => {
       .catch(error => {
         console.error('Error al obtener los datos de la API:', error);
         setTemperature('Error al obtener la temperatura.');
+        setOnlyTemp('Error al obtener la temperatura.');
       });
   }, []);
 

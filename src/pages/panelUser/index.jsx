@@ -12,9 +12,9 @@ import {
 } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
-import adminPic from '../../images/users/admin-avatar.png'
-import pacientePic from '../../images/users/paciente-avatar.png'
-import doctorPic from '../../images/users/doctor-avatar.png'
+import adminPic from '../../assets/users/admin-avatar.png'
+import pacientePic from '../../assets/users/paciente-avatar.png'
+import doctorPic from '../../assets/users/doctor-avatar.png'
 
 export const PanelUser = () => {
     const dispatch = useDispatch();
