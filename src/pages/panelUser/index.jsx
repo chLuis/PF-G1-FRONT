@@ -37,6 +37,7 @@ export const PanelUser = () => {
     const [dniSearch, SetDniSearch] = useState(false);
     const [dniSearchUser, setDniSearchUser] = useState(false);
     const [userImage, setUserImage] = useState("")
+    const [tipoUsuario, setTipoUsuario] = useState("")
     //const [paciente, setPaciente] = useState()
 
     //Muestra la lista de doctores que necesitan aprobacion para figurar en tarjetas de entrada
@@ -179,10 +180,13 @@ export const PanelUser = () => {
     useEffect(() => {
         if(admin){
             setUserImage(adminPic)
+            setTipoUsuario("Administrador")
         } else if(medico) {
             setUserImage(doctorPic)
+            setTipoUsuario("Medico")
         } else {
             setUserImage(pacientePic)
+            setTipoUsuario("Paciente")
         }
     }, [user]);
 
@@ -243,7 +247,7 @@ export const PanelUser = () => {
                     <div>
                         <div className="panelUserData">
                             <h2>Bienvenido {user}</h2>
-                            <h4>Datos del usuario</h4>
+                            <h4>Datos del {tipoUsuario}</h4>
                             <p>Nombre: {user}</p>
                             <p>Apellido: {apellido}</p>
                             <p>DNI: {dni}</p>

@@ -17,14 +17,16 @@ import {
 } from "./types";
 import Swal from "sweetalert2";
 
+const URL_actions = "http://localhost:8080"
+
 export const postDoctor = (user) => async (dispatch) => {
     try {
         const existingDoctor = await axios.get(
-            `http://localhost:8080/doctor/get/`
+            `${URL_actions}/doctor/get/`
         ); //peticion de la data doctor
 
         const existingPaciente = await axios.get(
-            `http://localhost:8080/paciente/get/`
+            `${URL_actions}/paciente/get/`
         ); //peticion de la data p○ciente
 
         const matriculaIngresada = parseInt(user.matricula); // convertir matricula ingresada string a number
@@ -73,7 +75,7 @@ export const postDoctor = (user) => async (dispatch) => {
             return;
         }
 
-        const res = await axios.post("http://localhost:8080/doctor/post", user);
+        const res = await axios.post(`${URL_actions}/doctor/post`, user);
         dispatch({
             type: POST_DOCTOR,
             payload: res.data,
@@ -96,7 +98,7 @@ export const getDoctor = (id) => async (dispatch) => {
     if (id) {
         try {
             const res = await axios.get(
-                `http://localhost:8080/doctor/get/${id}`
+                `${URL_actions}/doctor/get/${id}`
             );
             dispatch({
                 type: GET_DOCTOR,
@@ -110,7 +112,7 @@ export const getDoctor = (id) => async (dispatch) => {
 
 export const getDoctors = () => async (dispatch) => {
     try {
-        const res = await axios.get("http://localhost:8080/doctor/get/");
+        const res = await axios.get(`${URL_actions}/doctor/get/`);
         dispatch({
             type: GET_DOCTORS,
             payload: res.data,
@@ -139,7 +141,7 @@ export const putDoctor = (doctor, aprobar) => async (dispatch) => {
             } = doctor;
 
             const res = await axios.put(
-                `http://localhost:8080/doctor/put/${id_user}`,
+                `${URL_actions}/doctor/put/${id_user}`,
                 {
                     nombre,
                     apellido,
@@ -169,7 +171,7 @@ export const putDoctor = (doctor, aprobar) => async (dispatch) => {
 export const deleteDoctor = (id, next) => async (dispatch) => {
     try {
         const res = await axios.delete(
-            `http://localhost:8080/doctor/delete/${id}`
+            `${URL_actions}/doctor/delete/${id}`
         );
         next();
         dispatch({
@@ -183,7 +185,7 @@ export const deleteDoctor = (id, next) => async (dispatch) => {
 
 export const getPacientes = () => async (dispatch) => {
     try {
-        const res = await axios.get("http://localhost:8080/paciente/get/");
+        const res = await axios.get(`${URL_actions}/paciente/get/`);
         dispatch({
             type: GET_PACIENTES,
             payload: res.data,
@@ -197,7 +199,7 @@ export const getPaciente = (id) => async (dispatch) => {
     if (id) {
         try {
             const res = await axios.get(
-                `http://localhost:8080/paciente/get/${id}`
+                `${URL_actions}/paciente/get/${id}`
             );
             dispatch({
                 type: GET_PACIENTE,
@@ -214,7 +216,7 @@ export const getPaciente = (id) => async (dispatch) => {
 
 export const getUser = (dni, password) => async (dispatch) => {
     try {
-        const res = await axios.get(`http://localhost:8080/user/get/${dni}`, {
+        const res = await axios.get(`${URL_actions}/user/get/${dni}`, {
             params: {
                 dni,
                 password,
@@ -243,7 +245,7 @@ export const getUser = (dni, password) => async (dispatch) => {
 
 export const getUsers = () => async (dispatch) => {
     try {
-        const res = await axios.get("http://localhost:8080/user/get/");
+        const res = await axios.get(`${URL_actions}/user/get/`);
         dispatch({
             type: GET_USERS,
             payload: res.data,
@@ -262,7 +264,7 @@ export const logoutUser = () => {
 export const deleteUser = (id, next) => async (dispatch) => {
     try {
         const res = await axios.delete(
-            `http://localhost:8080/user/delete/${id}`
+            `${URL_actions}/user/delete/${id}`
         );
         next();
         dispatch({
@@ -277,11 +279,11 @@ export const deleteUser = (id, next) => async (dispatch) => {
 export const postPaciente = (user) => async (dispatch) => {
     try {
         const existingDoctor = await axios.get(
-            `http://localhost:8080/doctor/get/`
+            `${URL_actions}/doctor/get/`
         ); //peticion de la data doctor
 
         const existingPaciente = await axios.get(
-            `http://localhost:8080/paciente/get/`
+            `${URL_actions}/paciente/get/`
         ); //peticion de la data p○ciente
 
         const emailsDoc = Object.values(existingDoctor.data).map(
@@ -318,7 +320,7 @@ export const postPaciente = (user) => async (dispatch) => {
         }
         
         const res = await axios.post(
-            "http://localhost:8080/paciente/post",
+            `${URL_actions}/paciente/post`,
             user
         );
         dispatch({
@@ -345,7 +347,7 @@ export const postPaciente = (user) => async (dispatch) => {
     export const postTurno = (turno) => async (dispatch) => {
         try {
             const res = await axios.post(
-                "http://localhost:8080/turno/post",
+                `${URL_actions}/turno/post`,
                 turno
             );
             dispatch({
@@ -368,7 +370,7 @@ export const postPaciente = (user) => async (dispatch) => {
 
     export const getTurnos = () => async (dispatch) => {
         try {
-            const res = await axios.get(`http://localhost:8080/turno/get/`);
+            const res = await axios.get(`${URL_actions}/turno/get/`);
             dispatch({
                 type: GET_TURNOS,
                 payload: res.data,
@@ -382,7 +384,7 @@ export const postPaciente = (user) => async (dispatch) => {
     export const deleteTurno = (id, next) => async (dispatch) => {
         try {
             const res = await axios.delete(
-                `http://localhost:8080/turno/delete/${id}`
+                `${URL_actions}/turno/delete/${id}`
             );
             next();
             dispatch({
