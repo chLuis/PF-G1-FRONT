@@ -23,6 +23,7 @@ import doctorPic from '../../assets/users/doctor-avatar.png'
 export const PanelUser = () => {
     const dispatch = useDispatch();
     const {
+        _id,
         nombre: user,
         apellido,
         dni,
@@ -31,7 +32,8 @@ export const PanelUser = () => {
         mail,
         fechaNacimiento,
         administrador,
-        medico
+        medico,
+        token
     } = useSelector((state) => state.userReducer.user);
 
     const doctors = useSelector((state) => state.userReducer.doctors);
@@ -56,14 +58,14 @@ export const PanelUser = () => {
     
     //Muestra la lista de doctores que necesitan aprobacion para figurar en tarjetas de entrada
     function showDoctorForAprobe() {
-        dispatch(getDoctorsAdmin())
+        dispatch(getDoctorsAdmin(token))
         setListDoctorsForAprobe(!listDoctorsForAprobe);
     }
 
     //Actualiza el doc como aprobado
     async function refreshDoctors(doctorId, aprobado) {
         await dispatch(putDoctor(doctorId, aprobado));
-        dispatch(getDoctorsAdmin());
+        dispatch(getDoctorsAdmin(token));
         //console.log("refresco");
     }
     //https://img.freepik.com/vector-premium/medico-cirujano-concepto_108855-4197.jpg
@@ -112,7 +114,7 @@ export const PanelUser = () => {
                 if (result.isConfirmed) {
                     let doctorId = doc.id_user;
                     await dispatch(deleteDoctor(doctorId));
-                    dispatch(getDoctorsAdmin());
+                    dispatch(getDoctorsAdmin(token));
                     swalWithBootstrapButtons.fire(
                         "Borrado!",
                         "Has borrado a este doctor de la base de datos.",
@@ -127,13 +129,12 @@ export const PanelUser = () => {
                 }
             });
     }
-    let foundedUser, foundUser
-    if (dni && users != []) {
-        foundedUser = users?.find(user => user.dni === dni);
-    }
-    if(foundedUser) {
-        foundUser = foundedUser.id_user?.toString()
-    }
+    // let foundUser
+    // if (dni) {
+    //     foundUser = dni
+    // }
+
+    // console.log(foundUser)
     useEffect(() => {
         dispatch(getTurnos())
     },[])
@@ -142,7 +143,7 @@ export const PanelUser = () => {
     async function deleteUserSelected(user) {
         let conTurnoAsignado = false
         turnos?.map((turno) => {
-            if(turno.doctor_id === user.id_user || turno.paciente_id === user.id_user){
+            if(turno.doctor_id === _id || turno.paciente_id === _id){
                 conTurnoAsignado = true
             }    
         })
@@ -211,7 +212,7 @@ export const PanelUser = () => {
 
     useEffect(() => {
         if(administrador){
-            dispatch(getDoctorsAdmin());
+            dispatch(getDoctorsAdmin(token));
             setUserImage(adminPic)
             setTipoUsuario("Administrador")
         } else if(medico) {
@@ -431,7 +432,7 @@ export const PanelUser = () => {
                             </p>
                             {turnos &&<>
                             <h4>Turnos</h4>
-                            {turnos?.map((turno, i) => turno.paciente_id === foundUser
+                            {turnos?.map((turno, i) => turno.paciente_id === _id
                             ? <div className="turnos-panel-show" key={i}><p>Fecha(aaaa/mm/dd): {turno.fecha.split("T")[0]}, Hs: {turno.horario}:00 Espec.: {turno.especialidad} -  Dr. {turno.doctorNombre} </p> <button className="btn-delete-admin" onClick={() => borrarTurno(turno, turno.fecha)}>Cancelar</button></div>
                             : null
                             

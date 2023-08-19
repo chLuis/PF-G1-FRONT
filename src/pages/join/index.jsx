@@ -43,7 +43,7 @@ export const Join = () => {
         } else {
             dispatch(getUser(dni, password));
             dispatch(getTurnos())
-            dispatch(getUsers())
+            //dispatch(getUsers())
         }
     };
 
