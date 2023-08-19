@@ -96,6 +96,12 @@
     height: 38px;
     align-self: center;
 }
+.btn-update-img{
+    background-color: rgb(0, 107, 0) !important;
+    min-width: 148px;
+    height: 38px;
+    align-self: center;
+}
 .btn-delete-admin{
     background-color: red !important;
     width: 86px;
@@ -110,6 +116,7 @@
 
 .h4-add-especialidades{
     margin-top: 16px;
+    text-align: center;
 }
 .div-add-especialidades {
     display: flex;
@@ -141,7 +148,52 @@
 .span-especialidades {
     width: 160px !important;
 }
+.span-danger{
+    color: red !important;
+}
 
+.div-update-img-especialidades{
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    top: 10%;
+    left: 16%;
+    right: 16%;
+    max-width: 65dvw;
+    background-color: black !important;
+    height: 80dvh !important;
+    z-index: 4;
+}
+.div-update-img-especialidades h5 {
+    padding-bottom: 60px;
+    text-align: center;
+}
+.div-update-img-especialidades label {
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    height: 36px;
+    max-width: 80dvw !important;
+    margin: 10px 0px;
+    padding-bottom: 20px;
+}
+.div-update-img-especialidades input {
+    height: 36px;
+    max-width: 100% !important;
+    margin: 10px 0px;
+    color: black !important;
+}
+.btn-div-update-img{
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+.btn-div-update-img .cancelar-img {
+    background-color: red;
+}
 
 @media (max-width: 930px) {
     .panelUser-column img  {
