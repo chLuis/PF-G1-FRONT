@@ -18,6 +18,7 @@ import {
     POST_ESPECIALIDAD,
     GET_ESPECIALIDADES,
     DELETE_ESPECIALIDAD,
+    PATCH_ESPECIALIDAD
 } from "./types";
 
 const inicialState = {
@@ -80,6 +81,8 @@ export const userReducer = (state = inicialStateUser, action) => {
             return { ...state, turnos: action.payload };
         case GET_ESPECIALIDADES:
             return { ...state, especialidades: action.payload };
+        case PATCH_ESPECIALIDAD:
+            return { ...state};
         case DELETE_ESPECIALIDAD:
             return { ...state};
         case LOGGED_IN:

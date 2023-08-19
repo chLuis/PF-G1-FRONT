@@ -17,6 +17,7 @@ import {
     POST_ESPECIALIDAD,
     GET_ESPECIALIDADES,
     DELETE_ESPECIALIDAD,
+    PATCH_ESPECIALIDAD,
     GET_DOCTORS_ADMIN,
 } from "./types";
 import Swal from "sweetalert2";
@@ -448,6 +449,25 @@ export const postPaciente = (user) => async (dispatch) => {
             console.log(err);
         }
     
+    }
+
+    export const patchEspecialidad = (id, image) => async (dispatch) => {
+        try {
+            const res = await axios.patch(
+                `${URL_actions}/especialidad/patch/${id}`,
+                {image}
+            );
+            dispatch({
+                type: PATCH_ESPECIALIDAD,
+                payload: res.data,
+            });
+            Swal.fire({
+                icon: "success",
+                title: "Se agregó la nueva imagen!",
+            });
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     export const deleteEspecialidad = (id) => async (dispatch) => {
