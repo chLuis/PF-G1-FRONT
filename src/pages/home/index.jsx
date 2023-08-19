@@ -1,7 +1,8 @@
 import "./home.css";
-import { SectionDoctorsMain,  SacarTurno } from '../../components' 
+import { SectionDoctorsMain, SacarTurno } from '../../components' 
 
 export const Home = () => {
+
     return (
         <>
         <div className="main-page-div">
@@ -56,10 +57,6 @@ export const Home = () => {
         </div>
         <SectionDoctorsMain />
         <SacarTurno />
-        
         </>
     );
 };
-{
-    /* <Letras /> */
-}

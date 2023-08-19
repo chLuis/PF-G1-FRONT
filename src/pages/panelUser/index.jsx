@@ -2,13 +2,16 @@ import "./panelUser.css";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import {
-    getDoctors,
+    getDoctorsAdmin,
     putDoctor,
     deleteDoctor,
     getUsers,
     deleteUser,
     deleteTurno,
-    getTurnos
+    getTurnos,
+    postEspecialidad,
+    deleteEspecialidad,
+    getEspecialidades,
 } from "../../redux/actions";
 import { useDispatch } from "react-redux";
 import Swal from "sweetalert2";
@@ -19,32 +22,44 @@ import doctorPic from '../../assets/users/doctor-avatar.png'
 export const PanelUser = () => {
     const dispatch = useDispatch();
     const {
-        user,
+        nombre: user,
         apellido,
         dni,
         direccion,
         telefono,
         mail,
         fechaNacimiento,
-        admin,
+        administrador,
         medico
-    } = useSelector((state) => state.userReducer);
-    const doctors = useSelector((state) => state.userReducer.doctors);
+    } = useSelector((state) => state.userReducer.user);
+
+    const doctorsAdmin = useSelector((state) => state.userReducer.doctorsAdmin);
     const users = useSelector((state) => state.userReducer.users);
     const turnos = useSelector((state) => state.userReducer.turnos);
+    const especialidades = useSelector((state) => state.userReducer.especialidades) || [];
     const [listDoctorsForAprobe, setListDoctorsForAprobe] = useState(false);
     const [listUsersShow, setListUsersShow] = useState(false);
     const [dniSearch, SetDniSearch] = useState(false);
     const [dniSearchUser, setDniSearchUser] = useState(false);
     const [userImage, setUserImage] = useState("")
     const [tipoUsuario, setTipoUsuario] = useState("")
+    const [nuevaEspecialidad, setNuevaEspecialidad] = useState("")
+    const [imagenNuevaEspecialidad, setImagenNuevaEspecialidad] = useState("")
     //const [paciente, setPaciente] = useState()
-
+    
     //Muestra la lista de doctores que necesitan aprobacion para figurar en tarjetas de entrada
     function showDoctorForAprobe() {
-        dispatch(getDoctors())
+        dispatch(getDoctorsAdmin())
         setListDoctorsForAprobe(!listDoctorsForAprobe);
     }
+
+    //Actualiza el doc como aprobado
+    async function refreshDoctors(doctorId, aprobado) {
+        await dispatch(putDoctor(doctorId, aprobado));
+        dispatch(getDoctorsAdmin());
+        //console.log("refresco");
+    }
+    //https://img.freepik.com/vector-premium/medico-cirujano-concepto_108855-4197.jpg
     //Funcion para cambiar estado de "No aprobado" a "aprobado"
     function changeAprobado(doctorId, aprobado) {
         swalWithBootstrapButtons
@@ -90,7 +105,7 @@ export const PanelUser = () => {
                 if (result.isConfirmed) {
                     let doctorId = doc.id_user;
                     await dispatch(deleteDoctor(doctorId));
-                    dispatch(getDoctors());
+                    dispatch(getDoctorsAdmin());
                     swalWithBootstrapButtons.fire(
                         "Borrado!",
                         "Has borrado a este doctor de la base de datos.",
@@ -102,7 +117,6 @@ export const PanelUser = () => {
                         "Este doctor sigue en la base de datos",
                         "info"
                     );
-                    console.log("ESTOY EN DELETE DEL BTN");
                 }
             });
     }
@@ -157,7 +171,6 @@ export const PanelUser = () => {
     function guardarDNIuser(e) {
         setDniSearchUser(e)
         setListUsersShow(false)
-        console.log(e)
     }
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -178,7 +191,8 @@ export const PanelUser = () => {
     }, [dniSearchUser]);
 
     useEffect(() => {
-        if(admin){
+        if(administrador){
+            dispatch(getDoctorsAdmin());
             setUserImage(adminPic)
             setTipoUsuario("Administrador")
         } else if(medico) {
@@ -197,7 +211,11 @@ export const PanelUser = () => {
     }
 
     //Funcion para borrar un turno
-    async function borrarTurno(turno) {
+    async function borrarTurno(turno, fecha) {
+        let turnoFecha = fecha.split("T")[0]
+        let turnoFechaFix = turnoFecha.replaceAll("-", ",")
+        let turnoDate = new Date(turnoFechaFix)
+        let currentDate = new Date()
             swalWithBootstrapButtons
                 .fire({
                     title: "¿Estas seguro?",
@@ -209,6 +227,13 @@ export const PanelUser = () => {
                     reverseButtons: true,
                 })
                 .then(async (result) => {
+                    if(turnoDate <= currentDate){
+                        return swalWithBootstrapButtons.fire(
+                            "Acción cancelada",
+                            "No puede borrar turnos 24 hs antes",
+                            "info"
+                        );
+                    }
                     if (result.isConfirmed) {
                         let turnoId = turno._id;
                         await dispatch(deleteTurno(turnoId));
@@ -228,12 +253,84 @@ export const PanelUser = () => {
                 });
         }
     
-    //Actualiza el doc como aprobado
-    async function refreshDoctors(doctorId, aprobado) {
-        await dispatch(putDoctor(doctorId, aprobado));
-        dispatch(getDoctors());
-        console.log("refresco");
-    }
+        //////////////// Nueva especialidad /////////////////
+        function primeraMayusRestoMinus(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+        }
+
+        function manejarNuevaEspecialidad(e) {
+            let especialidad = primeraMayusRestoMinus(e.target.value)
+            setNuevaEspecialidad(especialidad)
+        }
+        function manejarNuevaImagen(e) {
+            setImagenNuevaEspecialidad(e.target.value)
+        }
+
+        async function agregarEspecialidad() {
+            swalWithBootstrapButtons
+                .fire({
+                    title: "¿Estas seguro?",
+                    text: "Vas a agregar a esta especialidad",
+                    icon: "info",
+                    showCancelButton: true,
+                    confirmButtonText: "Si! Agregar!",
+                    cancelButtonText: "No, cancelar!",
+                    reverseButtons: true,
+                })
+                .then(async (result) => {
+
+                    if (result.isConfirmed) {
+                        await dispatch(postEspecialidad(nuevaEspecialidad, imagenNuevaEspecialidad))
+                        dispatch(getEspecialidades())
+                        swalWithBootstrapButtons.fire(
+                            "Agregada!",
+                            "Has agregado esta especialidad.",
+                            "success"
+                        );
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        swalWithBootstrapButtons.fire(
+                            "Acción cancelada",
+                            "Este especialidad no se ha agregado",
+                            "info"
+                        );
+                    }
+                });
+
+        }
+
+        // Quitar especialidad
+        async function deleteEspecialidadFunction(id_especialidad) {
+            swalWithBootstrapButtons
+                .fire({
+                    title: "¿Estas seguro?",
+                    text: "Vas a borrar a esta especialidad",
+                    icon: "info",
+                    showCancelButton: true,
+                    confirmButtonText: "Si! Borrar!",
+                    cancelButtonText: "No, conservar!",
+                    reverseButtons: true,
+                })
+                .then(async (result) => {
+                    if (result.isConfirmed) {
+                        await dispatch(deleteEspecialidad(id_especialidad))
+                        dispatch(getEspecialidades())
+                        swalWithBootstrapButtons.fire(
+                            "Borrado!",
+                            "Has borrado esta especialidad.",
+                            "success"
+                        );
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        swalWithBootstrapButtons.fire(
+                            "Acción cancelada",
+                            "Esta especialidad se ha conservado",
+                            "info"
+                        );
+                    }
+                });
+
+
+        }
+
 
     return (
         <div className="panelUser">
@@ -263,13 +360,13 @@ export const PanelUser = () => {
                             {turnos &&<>
                             <h4>Turnos</h4>
                             {turnos?.map((turno, i) => turno.paciente_id === foundUser
-                            ? <div className="turnos-panel-show" key={i}><p>Fecha(aaaa/mm/dd): {turno.fecha.split("T")[0]}, Hs: {turno.horario}:00 Espec.: {turno.especialidad} -  Dr. {turno.doctorNombre} </p> <button className="btn-delete-admin" onClick={() => borrarTurno(turno)}>Cancelar</button></div>
+                            ? <div className="turnos-panel-show" key={i}><p>Fecha(aaaa/mm/dd): {turno.fecha.split("T")[0]}, Hs: {turno.horario}:00 Espec.: {turno.especialidad} -  Dr. {turno.doctorNombre} </p> <button className="btn-delete-admin" onClick={() => borrarTurno(turno, turno.fecha)}>Cancelar</button></div>
                             : null
                             
                             )}</>}
                         </div>
 
-                        {admin && (
+                        {administrador && (
                             <div className="columnDoctorsToAprobe">
                                 <h4>Doctores para aprobar</h4>
                                 <div className="div-btn-showAll-and-input">
@@ -292,7 +389,7 @@ export const PanelUser = () => {
                                 </div>
                                 {listDoctorsForAprobe && (
                                     <>
-                                        {doctors?.map((doctor, i) =>
+                                        {doctorsAdmin?.map((doctor, i) =>
                                             doctor.aprobado === false ? (
                                                 <div
                                                     key={i}
@@ -336,7 +433,7 @@ export const PanelUser = () => {
                                         )}
                                     </>
                                 )}                               
-                                    {doctors?.map((doctor, i) => {
+                                    {doctorsAdmin?.map((doctor, i) => {
                                         if (
                                             doctor.dni == dniSearch &&
                                             doctor.aprobado === false
@@ -466,7 +563,28 @@ export const PanelUser = () => {
                                         } else {
                                             return null; // O podrías renderizar un mensaje "no hay coincidencia" si lo prefieres
                                         }
-                                    })} 
+                                    })}
+                                    <>
+                                        <h4 className="h4-add-especialidades">Agregar especialidades</h4>
+                                        <div className="div-add-especialidades">
+                                            <div className="div-add-especialidades-input">
+                                                <label>Especialidad:</label>
+                                                <input placeholder="Neurología..." onChange={manejarNuevaEspecialidad}></input>
+                                            </div>
+                                            <div className="div-add-especialidades-input">
+                                                <label>Imagen:</label>
+                                                <input placeholder="https://..." onChange={manejarNuevaImagen}></input>
+                                            </div>
+                                            <button onClick={agregarEspecialidad} className="btn-approve-admin">Agregar</button>
+                                        </div>
+                                    </>
+                                    <>
+                                        <h4 className="h4-add-especialidades">Quitar especialidades</h4></>
+                                        {especialidades?.map((especialidad, i) =>
+                                            <div key={i} className="div-delete-especialidades">
+                                                <label className="span-especialidades">{especialidad.especialidad}</label>
+                                                <button onClick={() => deleteEspecialidadFunction(especialidad._id)} className="btn-delete-admin">Quitar</button>
+                                            </div>)}
                             </div>
                         )}
                     </div>
