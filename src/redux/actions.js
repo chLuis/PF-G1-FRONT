@@ -14,6 +14,10 @@ import {
     POST_TURNO,
     GET_TURNOS,
     DELETE_TURNO,
+    POST_ESPECIALIDAD,
+    GET_ESPECIALIDADES,
+    DELETE_ESPECIALIDAD,
+    GET_DOCTORS_ADMIN,
 } from "./types";
 import Swal from "sweetalert2";
 
@@ -121,6 +125,17 @@ export const getDoctors = () => async (dispatch) => {
         console.log(err.message);
     }
 };
+export const getDoctorsAdmin = () => async (dispatch) => {
+    try {
+        const res = await axios.get(`${URL_actions}/doctor/admin/get/`);
+        dispatch({
+            type: GET_DOCTORS_ADMIN,
+            payload: res.data,
+        });
+    } catch (err) {
+        console.log(err.message);
+    }
+};
 
 export const putDoctor = (doctor, aprobar) => async (dispatch) => {
     if (doctor) {
@@ -160,20 +175,19 @@ export const putDoctor = (doctor, aprobar) => async (dispatch) => {
             dispatch({
                 type: PUT_DOCTOR,
                 payload: res.data,
-            });
+            })
         } catch (err) {
             console.log(err);
         }
     }
-    console.log("ID Debe proveerse");
+    //console.log("ID Debe proveerse");
 };
 
-export const deleteDoctor = (id, next) => async (dispatch) => {
+export const deleteDoctor = (id) => async (dispatch) => {
     try {
         const res = await axios.delete(
             `${URL_actions}/doctor/delete/${id}`
         );
-        next();
         dispatch({
             type: DELETE_DOCTOR,
             payload: res.data,
@@ -209,7 +223,7 @@ export const getPaciente = (id) => async (dispatch) => {
             console.log(err);
         }
     }
-    console.log("ID Debe proveerse");
+    console.log("ID Debe2 proveerse");
 };
 
 ////////////////////////////////////// USUARIO //////////////////////////////////////
@@ -389,6 +403,60 @@ export const postPaciente = (user) => async (dispatch) => {
             next();
             dispatch({
                 type: DELETE_TURNO,
+                payload: res.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+
+///////////////////////////////// ESPECIALIDADES //////////////////////////////////////
+
+    export const postEspecialidad = (especialidad, image) => async (dispatch) => {
+        try {
+            const res = await axios.post(
+                `${URL_actions}/especialidad/post`,
+                {
+                    especialidad,
+                    image
+                }
+            );
+            dispatch({
+                type: POST_ESPECIALIDAD,
+                payload: res.data,
+            });
+            Swal.fire({
+                icon: "success",
+                title: "Registro Especialidad Exitoso!",
+            });}
+            catch(err) {
+                console.log(err)
+            }
+        
+    }
+
+
+    export const getEspecialidades = () => async (dispatch) => {
+        try {
+            const res = await axios.get(`${URL_actions}/especialidad/get/`);
+            dispatch({
+                type: GET_ESPECIALIDADES,
+                payload: res.data,
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    
+    }
+
+    export const deleteEspecialidad = (id) => async (dispatch) => {
+        try {
+            const res = await axios.delete(
+                `${URL_actions}/especialidad/delete/${id}`
+            );
+            dispatch({
+                type: DELETE_ESPECIALIDAD,
                 payload: res.data,
             });
         } catch (err) {

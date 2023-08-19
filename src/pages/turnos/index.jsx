@@ -10,12 +10,14 @@ export const Turnos = () => {
     const Navigate = useNavigate();
 
     const doctors = useSelector((state) => state.userReducer.doctors);
-    const user = useSelector((state) => state.userReducer.dni);
+    const user = useSelector((state) => state.userReducer.user.dni);
     const turnos = useSelector((state) => state.userReducer.turnos) || "";
+    const especialidades = useSelector((state) => state.userReducer.especialidades) || []
 
     const [dni, setDni] = useState(user);
     const [especialidadSeleccionadaInput, setEspecialidadSeleccionadaInput] = useState("");
     const [medico, setMedico] = useState("");
+    const [medicoDNI, setMedicoDNI] = useState("");
     const [fecha, setFecha] = useState("");
     const [hora, setHora] = useState("");
     const [motivo, setMotivo] = useState("");
@@ -26,8 +28,11 @@ export const Turnos = () => {
     }, [user]);
 
     function handleMedic(e) {
-        setMedico(e.target.value);
-    }
+        setMedicoDNI(e.target.value);
+        doctors?.map((doctor) => 
+        doctor.dni == e.target.value? setMedico(`${doctor.nombre} ${doctor.apellido}`): null
+        )}
+    
     function handleFecha(e) {
         setFecha(e.target.value);
     }
@@ -43,11 +48,10 @@ export const Turnos = () => {
     }
     let idDoctorElegido = false;
     doctors?.map((doctor, i) =>
-        doctor.dni == medico
-            ? (idDoctorElegido = doctors[i].usuario_id) //`${doctors[i].usuario_id} ${doctors[i].nombre}`
+        doctor.dni == medicoDNI
+            ? (idDoctorElegido = doctors[i].dni)
             : null
     );
-
 
     function turnoSet(e) {
         e.preventDefault();
@@ -74,26 +78,34 @@ export const Turnos = () => {
         const turno = {
             dniPaciente: dni,
             especialidad: especialidadSeleccionadaInput,
-            dniDoctor: Number(medico),
+            nombreDoctor: medico,
+            dniDoctor: Number(medicoDNI),
+            //dniPaciente: Number(dni),
             fecha: fecha,
             horario: hora,
             motivo: motivo,
         };
+        //console.log(turno)
         turno ? dispatch(postTurno(turno)) : null;
-        setTimeout(() => {
-            Navigate("/");
-        }, 2000)
+        // setTimeout(() => {
+        //     Navigate("/");
+        // }, 2000)
     }
     const turnosOcupados = [];
     turnos?.forEach((turno) => {
         if (
             turno.fecha?.split("T")[0] === fecha &&
-            turno.doctor_id === idDoctorElegido
+            turno.dniDoctor === idDoctorElegido
+        ) {
+            turnosOcupados.push(turno.horario.split(":")[0]);
+        } else if (
+            turno.fecha?.split("T")[0] === fecha &&
+            turno.dniPaciente === dni
         ) {
             turnosOcupados.push(turno.horario.split(":")[0]);
         }
     });
-    console.log(turnosOcupados);
+    //console.log(turnosOcupados);
 
     return (
         <div className="turnos form-wrapper">
@@ -115,12 +127,9 @@ export const Turnos = () => {
                         <option disabled defaultValue={-1}>
                             Selecciona una especialidad
                         </option>
-                        <option value="Cardiología">Cardiología</option>
-                        <option value="Dermatología">Dermatología</option>
-                        <option value="Neurología">Neurología</option>
-                        <option value="Obstetricia">Obstetricia</option>
-                        <option value="Odontología">Odontología</option>
-                        <option value="Traumatología">Traumatología</option>
+                        {especialidades?.map((especialidad, i) => (
+                                <option key={i} value={especialidad.especialidad}>{especialidad.especialidad}</option>
+                            ))}
                     </select>
                 </div>
                 {especialidadSeleccionadaInput &&<div className="input-group">
@@ -169,20 +178,17 @@ export const Turnos = () => {
                             <option disabled defaultValue={-1}>
                                 Selecciona un horario
                             </option>
-                            {Array.from({ length: 9 }).map((_, i) => {
+                            {Array.from({ length: 9 }).map((_, i) => { // Verifica si el doctor se encuentra libre
                                 const hour = i + 8;
                                 const hourString = hour.toString();
                                 let horaTurno = turnosOcupados;
-                                //let horaNumber = Number(horaTurno)
                                 if (!horaTurno.includes(hourString)) {
-                                    //console.log("hora libre", horaTurno, hour);
                                     return (
                                         <option key={i} value={hour}>
                                             {hour}:00
                                         </option>
                                     );
                                 }
-                                //console.log("hora ocupada", horaTurno, hour);
                                 return null;
                             })}
                         </select>

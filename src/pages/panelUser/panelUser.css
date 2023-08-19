@@ -108,6 +108,41 @@
 
 }
 
+.h4-add-especialidades{
+    margin-top: 16px;
+}
+.div-add-especialidades {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    
+}
+.div-add-especialidades-input {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.div-add-especialidades-input label{
+    width: 100px;
+}
+.div-add-especialidades-input input{
+    padding: 0px 3px;
+    width: 280px;
+    color: black !important;
+}
+
+.div-delete-especialidades{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.span-especialidades {
+    width: 160px !important;
+}
+
+
 @media (max-width: 930px) {
     .panelUser-column img  {
         display: none;
@@ -123,3 +158,4 @@
         margin: auto !important;
     }
 }
+
