@@ -58,7 +58,7 @@ export const Navbarr = () => {
           </div>
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className={`navbar-options ${isOpen && "open"}`}>
-              <Nav.Link onClick={() => setIsOpen(!isOpen)} className='navbar-links' as={Link} to="/">
+              <Nav.Link onClick={() => setIsOpen(!isOpen)} className='navbar-links' href='/'>
                 <i className="fa-solid fa-house"></i><span className='navbar-links-text'>Home</span>
               </Nav.Link>
               <Nav.Link onClick={() => setIsOpen(!isOpen)} href="#link" as={Link} to="/Turnos" className='navbar-links navbar-turnos'>
@@ -91,7 +91,7 @@ export const Navbarr = () => {
               </NavDropdown>
               {mostrar &&
               <span className="navbar-links navbar-login">
-                <Nav.Link as={Link} to="/Join" onClick={() => setIsOpen(!isOpen)}>
+                <Nav.Link href='/Join' onClick={() => setIsOpen(!isOpen)}>
                   Inicio
                 </Nav.Link>
               </span>}
@@ -100,7 +100,7 @@ export const Navbarr = () => {
                 <span>
                 <Nav.Link as={Link} to="/panelUser" onClick={() => setIsOpen(!isOpen)}>
                 <span className='nombre-user'>
-                  Bienvenido {user}
+                  Bienvenido {user.nombre}
                 </span>
                 </Nav.Link>
                 </span>

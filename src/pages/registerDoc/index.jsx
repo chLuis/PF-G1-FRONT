@@ -1,13 +1,16 @@
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { postDoctor } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { getEspecialidades, postDoctor } from '../../redux/actions';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
 
 export const RegisterDoc = () => {
     const dispatch = useDispatch();
     const Navigate = useNavigate();
+    //dispatch(getEspecialidades())
+
+    const especialidades = useSelector((state) => state.userReducer.especialidades) || []
 
     const [nombre, setNombre] = useState('')
     const [apellido, setApellido] = useState('')
@@ -20,9 +23,13 @@ export const RegisterDoc = () => {
     const [especialidad, setEspecialidad] = useState('')
     const [password, setPassword] = useState('')
     const [passwordRepeat, setPasswordRepeat] = useState('')
-
     const [showPassword1, setShowPassword1] = useState(false);
     const [showPassword2, setShowPassword2] = useState(false);
+
+    function handleEspecialidad(e) {
+        setEspecialidad(e.target.value);
+    }
+    
 
     const handleSubmit = async(e) => {
         e.preventDefault();
@@ -227,14 +234,11 @@ export const RegisterDoc = () => {
                         <label>Nro de Matricula</label>
                     </div>
                     <div className='selectSpec'>
-                        <select  className="input-group" value={especialidad} onChange={(e) => setEspecialidad(e.target.value)} required>
+                        <select  className="input-group" value={especialidad} onChange={handleEspecialidad} required>
                             <option value="">Selecciona una especialidad</option>
-                            <option value="Cardiología">Cardiología</option>
-                            <option value="Dermatología">Dermatología</option>
-                            <option value="Neurología">Neurología</option>
-                            <option value="Obstetricia">Obstetricia</option>
-                            <option value="Odontología">Odontología</option>
-                            <option value="Traumatología">Traumatología</option>
+                            {especialidades?.map((especialidad, i) => (
+                                <option key={i} value={especialidad.especialidad}>{especialidad.especialidad}</option>
+                            ))}
                         </select> 
                     </div>
                     <div className="input-group">
