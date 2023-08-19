@@ -33,6 +33,7 @@ export const PanelUser = () => {
         medico
     } = useSelector((state) => state.userReducer.user);
 
+    const doctors = useSelector((state) => state.userReducer.doctors);
     const doctorsAdmin = useSelector((state) => state.userReducer.doctorsAdmin);
     const users = useSelector((state) => state.userReducer.users);
     const turnos = useSelector((state) => state.userReducer.turnos);
@@ -299,7 +300,20 @@ export const PanelUser = () => {
         }
 
         // Quitar especialidad
-        async function deleteEspecialidadFunction(id_especialidad) {
+        async function deleteEspecialidadFunction(id_especialidad, especialidad) {
+            let doctoresEspecialidad = false
+            doctors?.map((doctor) => {
+                if(doctor.especialidad == especialidad){
+                    doctoresEspecialidad = true
+                }}
+            )
+            if(doctoresEspecialidad){
+                return swalWithBootstrapButtons.fire(
+                    "Acción cancelada",
+                    "No puedes borrar especialidades que tiene doctores asignados, primero elimina todos los doctores de esa especialidad",
+                    "error"
+                );
+            }
             swalWithBootstrapButtons
                 .fire({
                     title: "¿Estas seguro?",
@@ -583,7 +597,7 @@ export const PanelUser = () => {
                                         {especialidades?.map((especialidad, i) =>
                                             <div key={i} className="div-delete-especialidades">
                                                 <label className="span-especialidades">{especialidad.especialidad}</label>
-                                                <button onClick={() => deleteEspecialidadFunction(especialidad._id)} className="btn-delete-admin">Quitar</button>
+                                                <button onClick={() => deleteEspecialidadFunction(especialidad._id, especialidad.especialidad)} className="btn-delete-admin">Quitar</button>
                                             </div>)}
                             </div>
                         )}
