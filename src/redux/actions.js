@@ -126,9 +126,11 @@ export const getDoctors = () => async (dispatch) => {
         console.log(err.message);
     }
 };
-export const getDoctorsAdmin = () => async (dispatch) => {
+export const getDoctorsAdmin = (token) => async (dispatch) => {
     try {
-        const res = await axios.get(`${URL_actions}/doctor/admin/get/`);
+        const res = await axios.get(`${URL_actions}/doctor/admin/get/`, { headers: {
+            'Authorization': `Bearer ${token}`
+          }});
         dispatch({
             type: GET_DOCTORS_ADMIN,
             payload: res.data,
@@ -232,11 +234,8 @@ export const getPaciente = (id) => async (dispatch) => {
 export const getUser = (dni, password) => async (dispatch) => {
     try {
         const res = await axios.get(`${URL_actions}/user/get/${dni}`, {
-            params: {
-                dni,
-                password,
-            },
-        });
+            params: {dni, password} });
+        //console.log(res)
         dispatch({
             type: LOGGED_IN,
             payload: res.data,
