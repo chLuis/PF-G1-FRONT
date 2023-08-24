@@ -43,9 +43,11 @@ export const PanelUser = () => {
     const especialidades = useSelector((state) => state.userReducer.especialidades) || [];
 
     const [listDoctorsForAprobe, setListDoctorsForAprobe] = useState(false);        // mostrar lista para aprobar
+    const [listDoctorsForDisapprove, setListDoctorsForDisapprove] = useState(false);// mostrar lista para aprobar
     const [listUsersShow, setListUsersShow] = useState(false);                      // mostrar ocultar lista
     const [dniSearch, SetDniSearch] = useState(false);                              // buscar por dni (oculta la lista)
     const [dniSearchUser, setDniSearchUser] = useState(false);                      // buscar por dni
+    const [dniTurno, setDniTurno] = useState(false);                                // buscar por dni turnos
     const [userImage, setUserImage] = useState("")                                  // Modifica la imagen de log
     const [tipoUsuario, setTipoUsuario] = useState("")                              // Clasifica al user por Doc/Paciente/Administrador
     const [nuevaEspecialidad, setNuevaEspecialidad] = useState("")                  // Input de la especialidad a agregar
@@ -57,9 +59,13 @@ export const PanelUser = () => {
     //const [paciente, setPaciente] = useState()
     
     //Muestra la lista de doctores que necesitan aprobacion para figurar en tarjetas de entrada
-    function showDoctorForAprobe() {
+    function showDoctorForApprove() {
         dispatch(getDoctorsAdmin(token))
         setListDoctorsForAprobe(!listDoctorsForAprobe);
+    }
+    function showDoctorForDisapprove() {
+        dispatch(getDoctorsAdmin(token))
+        setListDoctorsForDisapprove(!listDoctorsForDisapprove);
     }
 
     //Actualiza el doc como aprobado
@@ -71,7 +77,8 @@ export const PanelUser = () => {
     //https://img.freepik.com/vector-premium/medico-cirujano-concepto_108855-4197.jpg
     //Funcion para cambiar estado de "No aprobado" a "aprobado"
     function changeAprobado(doctorId, aprobado) {
-        swalWithBootstrapButtons
+        if(aprobado === true)
+        {swalWithBootstrapButtons
             .fire({
                 title: "¿Estas seguro?",
                 text: "Vas a permitir al usuario a acceder como Medico autorizado",
@@ -96,7 +103,34 @@ export const PanelUser = () => {
                         "error"
                     );
                 }
-            });
+            });}
+        else if(aprobado === false)
+        {swalWithBootstrapButtons
+            .fire({
+                title: "¿Estas seguro?",
+                text: "Vas a quitarle los permisos como Medico autorizado",
+                icon: "info",
+                showCancelButton: true,
+                confirmButtonText: "Si! Quitar!",
+                cancelButtonText: "No, cancelar!",
+                reverseButtons: true,
+            })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    refreshDoctors(doctorId, aprobado);
+                    swalWithBootstrapButtons.fire(
+                        "Aprobado!",
+                        "Has quitado a este Medico de la lista de autorizados.",
+                        "success"
+                    );
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    swalWithBootstrapButtons.fire(
+                        "Acción cancelada",
+                        "Has conservado a este Medico en la lista de autorizado",
+                        "error"
+                    );
+                }
+            });}
     }
     //Funcion para borrar un doctor de la lista de doctores
     async function deleteDoctorSelected(doc) {
@@ -141,9 +175,13 @@ export const PanelUser = () => {
 
     //Funcion para borrar un usuario de la base de datos 
     async function deleteUserSelected(user) {
+        console.log(user)
         let conTurnoAsignado = false
         turnos?.map((turno) => {
-            if(turno.doctor_id === _id || turno.paciente_id === _id){
+            if(turno.doctor_id === user.id_user || turno.paciente_id === user.id_user){
+                console.log(turno.doctor_id)
+                console.log(turno.paciente_id)
+                console.log("EStoy aquyi?=")
                 conTurnoAsignado = true
             }    
         })
@@ -187,6 +225,7 @@ export const PanelUser = () => {
     function guardarDNI(e) {
         SetDniSearch(e);
         setListDoctorsForAprobe(false);
+        setListDoctorsForDisapprove(false);
     }
     function guardarDNIuser(e) {
         setDniSearchUser(e)
@@ -272,7 +311,12 @@ export const PanelUser = () => {
                     }
                 });
         }
+    //Mostrar turno por DNI 
     
+    function guardarDNITurnos(e){
+        setDniTurno(e)
+    }
+
         //////////////// Nueva especialidad /////////////////
         function primeraMayusRestoMinus(str) {
             return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -431,9 +475,9 @@ export const PanelUser = () => {
                                     : false}
                             </p>
                             {turnos &&<>
-                            <h4>Turnos</h4>
+                            <h4>Mis turnos</h4>
                             {turnos?.map((turno, i) => turno.paciente_id === _id
-                            ? <div className="turnos-panel-show" key={i}><p>Fecha(aaaa/mm/dd): {turno.fecha.split("T")[0]}, Hs: {turno.horario}:00 Espec.: {turno.especialidad} -  Dr. {turno.doctorNombre} </p> <button className="btn-delete-admin" onClick={() => borrarTurno(turno, turno.fecha)}>Cancelar</button></div>
+                            ? <div className="turnos-panel-show" key={i}><span className="tooltipPanel">Motivo de la consulta: {turno.motivo}</span><p>{turno.fecha.split("T")[0]} (mm/dd), Hs: {turno.horario}:00 Espec.: {turno.especialidad} -  Dr. {turno.doctorNombre} </p> <button className="btn-delete-admin" onClick={() => borrarTurno(turno, turno.fecha)}>Cancelar</button></div>
                             : null
                             
                             )}</>}
@@ -441,9 +485,17 @@ export const PanelUser = () => {
 
                         {administrador && (
                             <div className="columnDoctorsToAprobe">
-                                <h4>Doctores para aprobar</h4>
+                            <h4>Buscar turnos</h4>
+                            {true && 
+                                <>
+                                    <input className="searchDNI" onChange={(e) => guardarDNITurnos(e.target.value)} type="text" placeholder="Buscar por DNI"></input>
+                                    {dniTurno && <h6 className="turnosPorDni">Turnos del DNI: {dniTurno}</h6>}
+                                    {turnos?.map((turno, i) => (turno.dniDoctor == dniTurno || turno.dniPaciente == dniTurno)?
+                                                <div className="turnos-panel-show" key={i}><span className="tooltipPanel">Motivo de la consulta: {turno.motivo}</span>Fecha: {turno.fecha.split("T")[0]}, Hs: {turno.horario}:00 Espec.: {turno.especialidad} -  Dr. {turno.doctorNombre} - Paciente: {turno.pacienteNombre}<button className="btn-delete-admin" onClick={() => borrarTurno(turno, turno.fecha)}>Cancelar</button> </div> : null)}
+                                </>}
+                            <h4>Doctores para aprobar</h4>
                                 <div className="div-btn-showAll-and-input">
-                                <button onClick={showDoctorForAprobe}>
+                                <button onClick={showDoctorForApprove}>
                                     {" "}
                                     {listDoctorsForAprobe
                                         ? "Ocultar lista"
@@ -537,6 +589,119 @@ export const PanelUser = () => {
                                                             }
                                                         >
                                                             Aprobar
+                                                        </button>
+                                                        <button
+                                                            className="btn-delete-admin"
+                                                            onClick={() =>
+                                                                deleteDoctorSelected(
+                                                                    doctor
+                                                                )
+                                                            }
+                                                        >
+                                                            Eliminar
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            );
+                                        } else {
+                                            return null; // O podrías renderizar un mensaje "no hay coincidencia" si lo prefieres
+                                        }
+                                    })}<h4>Doctores para quitar aprobación</h4>
+                                <div className="div-btn-showAll-and-input">
+                                <button onClick={showDoctorForDisapprove}>
+                                    {" "}
+                                    {listDoctorsForDisapprove
+                                        ? "Ocultar lista"
+                                        : "Mostrar todos"}{" "}
+                                </button>
+                                <span>
+                                    <input
+                                        onChange={(e) =>
+                                            guardarDNI(e.target.value)
+                                        }
+                                        type="text"
+                                        placeholder="Buscar por DNI"
+                                        className="searchDNI"
+                                    />
+                                </span>
+                                </div>
+                                {listDoctorsForDisapprove && (
+                                    <>
+                                        {doctorsAdmin?.map((doctor, i) =>
+                                            doctor.aprobado === true ? (
+                                                <div
+                                                    key={i}
+                                                    className="doctorToApprove"
+                                                >
+                                                    <span>
+                                                        Matrícula:{" "}
+                                                        {doctor.matricula} - Dr.{" "}
+                                                        {doctor.nombre}{" "}
+                                                        {doctor.apellido} -{" "}
+                                                        {doctor.especialidad}
+                                                    </span>
+                                                    <span>
+                                                        DNIº {doctor.dni}
+                                                    </span>
+                                                    <span className="btn-manage-doc">
+                                                        <button
+                                                            className="btn-disapprove-admin"
+                                                            onClick={() =>
+                                                                changeAprobado(
+                                                                    doctor,
+                                                                    false
+                                                                )
+                                                            }
+                                                        >
+                                                            Quitar
+                                                        </button>
+                                                        <button
+                                                            className="btn-delete-admin"
+                                                            onClick={() =>
+                                                                deleteDoctorSelected(
+                                                                    doctor
+                                                                )
+                                                            }
+                                                        >
+                                                            Eliminar
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            ) : null
+                                        )}
+                                    </>
+                                )}                               
+                                    {doctorsAdmin?.map((doctor, i) => {
+                                        if (
+                                            doctor.dni == dniSearch &&
+                                            doctor.aprobado === true
+                                        ) {
+                                            return (
+                                                <div
+                                                    key={i}
+                                                    className="doctorToApprove"
+                                                >
+                                                    <span>
+                                                        Matrícula:{" "}
+                                                        {doctor.matricula} - Dr.{" "}
+                                                        {doctor.nombre}{" "}
+                                                        {doctor.apellido} -{" "}
+                                                        {doctor.especialidad}
+                                                    </span>
+                                                    <span>
+                                                        DNIº {doctor.dni}
+                                                    </span>
+                                                    <span className="btn-manage-doc">
+                                                        <button
+                                                            className="btn-disapprove-admin"
+                                                            onClick={() =>
+                                                                changeAprobado(
+                                                                    doctor,
+                                                                    false
+                                                                )
+                                                            }
+                                                        >
+                                                            Quitar
                                                         </button>
                                                         <button
                                                             className="btn-delete-admin"
@@ -656,7 +821,7 @@ export const PanelUser = () => {
                                         {especialidades?.map((especialidad, i) =>
                                             <div key={i} className="div-delete-especialidades">
                                                 <label className="span-especialidades">{especialidad.especialidad}</label>
-                                                <button onClick={() => editImageEsp(especialidad._id, especialidad.especialidad, especialidad.image)} className="btn-update-img">Cambiar imagen</button>
+                                                <button onClick={() => editImageEsp(especialidad._id, especialidad.especialidad, especialidad.image)} className="btn-update-img"><i className="fa-regular fa-pen-to-square"></i> imagen</button>
                                                 <button onClick={() => deleteEspecialidadFunction(especialidad._id, especialidad.especialidad)} className="btn-delete-admin">Eliminar</button>
                                             </div>)}
                                             {editImage &&

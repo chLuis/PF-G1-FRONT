@@ -2,12 +2,12 @@ import "./turnos.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { postTurno, getTurnos } from "../../redux/actions";
-import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+//import { useNavigate } from "react-router-dom";
 
 export const Turnos = () => {
     const dispatch = useDispatch();
-    const Navigate = useNavigate();
+    //const Navigate = useNavigate();
 
     const doctors = useSelector((state) => state.userReducer.doctors);
     const user = useSelector((state) => state.userReducer.user.dni);
@@ -109,7 +109,7 @@ export const Turnos = () => {
 
     return (
         <div className="turnos form-wrapper">
-            {!user && <h2 className="formularioNoLog">Inicia Sesión para solicitar un turno</h2>}
+            {!user && <h2 className="formularioNoLog"><a href="/Join">Inicia Sesión para solicitar un turno</a></h2>}
             {user &&<form className="formularioTurnos" onSubmit={turnoSet}>
                 <h2>Solicitar Turno</h2>
                 <div className="input-group">
