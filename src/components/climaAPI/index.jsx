@@ -21,8 +21,8 @@ export const ClimaApi = () => {
       })
       .catch(error => {
         console.error('Error al obtener los datos de la API:', error);
-        setTemperature('Error al obtener la temperatura.');
-        setOnlyTemp('Error al obtener la temperatura.');
+        setTemperature('Error al cargar');
+        setOnlyTemp('Error al cargar');
       });
   }, []);
 

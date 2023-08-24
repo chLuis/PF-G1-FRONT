@@ -91,7 +91,7 @@ export const Navbarr = () => {
               </NavDropdown>
               {mostrar &&
               <span className="navbar-links navbar-login">
-                <Nav.Link href='/Join' onClick={() => setIsOpen(!isOpen)}>
+                <Nav.Link as={Link} to="/Join" onClick={() => setIsOpen(!isOpen)}>
                   Inicio
                 </Nav.Link>
               </span>}
