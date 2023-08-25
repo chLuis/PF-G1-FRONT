@@ -1,8 +1,11 @@
 .panelUser{
     min-height: 90dvh;
+    margin: 0px !important;
     margin-top: 20px;
 }
-
+.panelUserData{
+    max-width: 99% !important;
+}
 .panelUserData p {
     margin: 1px;
 }
@@ -86,6 +89,7 @@
     display: flex;
     gap: 6px;
     place-content: center;
+    max-width: 100%;
 }
 
 .div-btn-showAll-and-input button{
@@ -128,6 +132,8 @@
     padding-top: 10px;
 }
 .h4-add-especialidades{
+    position: relative;
+    padding: 0 !important;
     margin-top: 16px;
     text-align: center;
 }
@@ -136,6 +142,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    max-width: 100%;
 }
 .div-add-especialidades-input {
     display: flex;
@@ -156,6 +163,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    margin: 0px !important;
+    max-width: 100%;
 }
 .span-especialidades {
     width: 160px !important;
@@ -205,7 +214,7 @@
 }
 .btn-update-img {
     background-color: rgb(0, 43, 143) !important;
-    width: 80px;
+    max-width: 80px;
 
 }
 .btn-div-update-img .cancelar-img {
@@ -257,4 +266,15 @@
     pointer-events: auto;
     color: black !important;
     padding-inline: 10px;
+}
+.h4-add-especialidades:hover .tooltipPanel{
+    top: -45px;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto;
+    color: black !important;
+    padding-inline: 10px;
+}
+.fueraDeFecha{
+    background-color: black !important;
 }

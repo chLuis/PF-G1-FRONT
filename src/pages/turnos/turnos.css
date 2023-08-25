@@ -91,3 +91,9 @@
         height: 750px;
     }
 }
+
+button:disabled{
+    cursor: no-drop;
+    user-select: none;
+    background-color: gray;
+}

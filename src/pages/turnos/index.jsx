@@ -3,11 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
 import { postTurno, getTurnos } from "../../redux/actions";
 import Swal from 'sweetalert2';
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export const Turnos = () => {
     const dispatch = useDispatch();
-    //const Navigate = useNavigate();
+    const Navigate = useNavigate();
 
     const doctors = useSelector((state) => state.userReducer.doctors);
     const user = useSelector((state) => state.userReducer.user.dni);
@@ -21,7 +21,16 @@ export const Turnos = () => {
     const [fecha, setFecha] = useState("");
     const [hora, setHora] = useState("");
     const [motivo, setMotivo] = useState("");
-    const [isFocusedDate, setIsFocusedDate] = useState(false);
+    const [btnSolicitar, setBtnSolicitar] = useState(true)
+
+    let especialidadesDoctores = []
+    doctors?.map((doctor) => {
+        doctor.aprobado
+        ? especialidadesDoctores.push(doctor.especialidad)
+        : null
+    })
+    const especialidadArray = new Set(especialidadesDoctores)
+    const especialidadesDoctorAprobado = [...especialidadArray]
 
     useEffect(() => {
         dispatch(getTurnos());
@@ -41,6 +50,7 @@ export const Turnos = () => {
     }
     function handleMotivo(e) {
         setMotivo(e.target.value);
+        setBtnSolicitar(false)
     }
 
     function handleEspecialidad(e) {
@@ -63,7 +73,7 @@ export const Turnos = () => {
             Swal.fire({
                 icon: 'error',
                 title: 'FECHA: datos incorrectos!',
-                text: 'La fecha debe ser dias posteriores al actual.',
+                text: 'El turno debe ser solicitado 24 horas antes.',
               })
               return
         }
@@ -85,11 +95,11 @@ export const Turnos = () => {
             horario: hora,
             motivo: motivo,
         };
-        //console.log(turno)
+        
         turno ? dispatch(postTurno(turno)) : null;
-        // setTimeout(() => {
-        //     Navigate("/");
-        // }, 2000)
+            setTimeout(() => {
+                Navigate("/");
+            }, 1500)
     }
     const turnosOcupados = [];
     turnos?.forEach((turno) => {
@@ -128,6 +138,7 @@ export const Turnos = () => {
                             Selecciona una especialidad
                         </option>
                         {especialidades?.map((especialidad, i) => (
+                            especialidadesDoctorAprobado.includes(especialidad.especialidad) &&
                                 <option key={i} value={especialidad.especialidad}>{especialidad.especialidad}</option>
                             ))}
                     </select>
@@ -194,11 +205,11 @@ export const Turnos = () => {
                         </select>
                     </div>
                 )}
-                <div className="input-group">
+                {hora &&<div className="input-group">
                     <input type="text" required onChange={handleMotivo} />
-                    <label>Observaciones</label>
-                </div>
-                <button type="submit">Solicitar</button>
+                    <label>Motivo de la consulta</label>
+                </div>}
+                <button type="submit" disabled={btnSolicitar}>Solicitar</button>
             </form>}
         </div>
     );
