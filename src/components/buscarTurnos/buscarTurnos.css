@@ -1,0 +1,64 @@
+.searchDNI {
+    color: black !important;
+    max-width: 140px;
+    padding-inline: 4px;
+}
+.turnosPorDni{
+    padding-top: 10px;
+    text-decoration: underline;
+}
+.turnos-panel-show:hover .tooltipPanel{
+    top: -45px;
+    opacity: 1 !important;
+    visibility: visible !important;
+    pointer-events: auto;
+    color: black !important;
+    padding-inline: 10px;
+}
+.turnos-panel-show{
+    position: relative;
+    max-width: 85dvw;
+    margin: 3px !important;
+    padding: 0 !important;
+    line-height: 34px;
+    display: grid;
+    grid-template-columns: 4fr 0.5fr;
+    border-bottom: 1px solid black;
+    gap: 4px;
+}
+.turnos-panel-show p {
+    padding-inline: 6px;
+}
+.turnos-panel-show:hover{
+    cursor: pointer;
+    transition: 0.15s;
+    background-color: rgb(136, 135, 135) !important;
+}
+.tooltipPanel {
+    position: absolute;
+    top: 0;
+    font-size: 0.8rem;
+    background: #fff;
+    color: #fff;
+    border-radius: 5px;
+    opacity: 0 !important;
+    pointer-events: none;
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.tooltipPanel::before{
+    position: absolute;
+    content: "";
+    height: 8px;
+    width: 8px;
+    background: #fff;
+    bottom: -3px;
+    left: 50%;
+    transform: translate(-50%) rotate(45deg);
+    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+.btn-delete-admin{
+    background-color: red !important;
+    width: 94px;
+    height: 38px;
+    align-self: center !important;
+}
