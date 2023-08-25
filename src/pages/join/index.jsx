@@ -2,7 +2,7 @@ import "./join.css";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-import { getUser, getTurnos, getUsers } from "../../redux/actions";
+import { getUser } from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -11,6 +11,7 @@ export const Join = () => {
     const Navigate = useNavigate();
 
     const { user } = useSelector((state) => state.userReducer) || false;
+
     const [usuario, setUsuario] = useState(false);
     const [dni, setDni] = useState("");
     const [password, setPassword] = useState("");
@@ -41,8 +42,8 @@ export const Join = () => {
                 text: "El DNI debe ser numérico.",
             });
         } else {
-            dispatch(getUser(dni, password));
-            dispatch(getTurnos())
+            await dispatch(getUser(dni, password));
+            //dispatch(getTurnos(token))
             //dispatch(getUsers())
         }
     };

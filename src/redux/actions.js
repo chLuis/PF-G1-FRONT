@@ -22,7 +22,7 @@ import {
 } from "./types";
 import Swal from "sweetalert2";
 
-const URL_actions = "https://pf-back-vd4v-dev.fl0.io" //  // "http://localhost:8080"
+const URL_actions = "http://localhost:8080" //  // "https://pf-back-vd4v-dev.fl0.io"
 
 export const postDoctor = (user) => async (dispatch) => {
     try {
@@ -99,11 +99,13 @@ export const postDoctor = (user) => async (dispatch) => {
     }
 };
 
-export const getDoctor = (id) => async (dispatch) => {
+export const getDoctor = (id, token) => async (dispatch) => {
     if (id) {
         try {
             const res = await axios.get(
-                `${URL_actions}/doctor/get/${id}`
+                `${URL_actions}/doctor/get/${id}`, { headers: {
+                    'Authorization': `Bearer ${token}`
+                }}
             );
             dispatch({
                 type: GET_DOCTOR,
@@ -148,7 +150,7 @@ export const getDoctorsAdmin = (token) => async (dispatch) => {
     }
 };
 
-export const putDoctor = (doctor, aprobar) => async (dispatch) => {
+export const putDoctor = (doctor, aprobar, token) => async (dispatch) => {
     if (doctor) {
         try {
             let {
@@ -165,7 +167,7 @@ export const putDoctor = (doctor, aprobar) => async (dispatch) => {
                 especialidad,
                 usuario_id,
             } = doctor;
-
+            
             const res = await axios.put(
                 `${URL_actions}/doctor/put/${id_user}`,
                 {
@@ -181,36 +183,43 @@ export const putDoctor = (doctor, aprobar) => async (dispatch) => {
                     especialidad,
                     usuario_id,
                     aprobado: aprobar,
-                }
+                }, { headers: {
+                    'Authorization': `Bearer ${token}`
+                }}
             );
             dispatch({
                 type: PUT_DOCTOR,
                 payload: res.data,
             })
         } catch (err) {
-            console.log(err);
+            alert(err.response.data);
         }
     }
     //console.log("ID Debe proveerse");
 };
 
-export const deleteDoctor = (id) => async (dispatch) => {
+export const deleteDoctor = (id, token) => async (dispatch) => {
     try {
         const res = await axios.delete(
-            `${URL_actions}/doctor/delete/${id}`
+            `${URL_actions}/doctor/delete/${id}`, { headers: {
+                'Authorization': `Bearer ${token}`
+              }}
         );
         dispatch({
             type: DELETE_DOCTOR,
             payload: res.data,
         });
     } catch (err) {
-        console.log(err);
+        console.log(err.message)
+        console.log(err.response.data);
     }
 };
 
-export const getPacientes = () => async (dispatch) => {
+export const getPacientes = (token) => async (dispatch) => {
     try {
-        const res = await axios.get(`${URL_actions}/paciente/get/`);
+        const res = await axios.get(`${URL_actions}/paciente/get/`,{ headers: {
+            'Authorization': `Bearer ${token}`
+        }});
         dispatch({
             type: GET_PACIENTES,
             payload: res.data,
@@ -265,15 +274,17 @@ export const getUser = (dni, password) => async (dispatch) => {
     }
 };
 
-export const getUsers = () => async (dispatch) => {
+export const getUsers = (token) => async (dispatch) => {
     try {
-        const res = await axios.get(`${URL_actions}/user/get/`);
+        const res = await axios.get(`${URL_actions}/user/get/`, { headers: {
+            'Authorization': `Bearer ${token}`
+        }});
         dispatch({
             type: GET_USERS,
             payload: res.data,
         });
     } catch (err) {
-        console.log(err);
+        console.log(err.response.data);
     }
 };
 
@@ -283,18 +294,19 @@ export const logoutUser = () => {
     };
 };
 
-export const deleteUser = (id, next) => async (dispatch) => {
+export const deleteUser = (id, token) => async (dispatch) => {
     try {
         const res = await axios.delete(
-            `${URL_actions}/user/delete/${id}`
+            `${URL_actions}/user/delete/${id}`, { headers: {
+                'Authorization': `Bearer ${token}`
+            }}
         );
-        next();
         dispatch({
             type: DELETE_DOCTOR,
             payload: res.data,
         });
     } catch (err) {
-        console.log(err);
+        alert(err.response.data);
     }
 };
 
@@ -390,31 +402,34 @@ export const postPaciente = (user) => async (dispatch) => {
         }
     };
 
-    export const getTurnos = () => async (dispatch) => {
+    export const getTurnos = (token) => async (dispatch) => {
         try {
-            const res = await axios.get(`${URL_actions}/turno/get/`);
+            const res = await axios.get(`${URL_actions}/turno/get/`, { headers: {
+                'Authorization': `Bearer ${token}`
+            }});
             dispatch({
                 type: GET_TURNOS,
                 payload: res.data,
             });
         } catch (err) {
-            console.log(err);
+            alert(err.response.data);
         }
     
     }
 
-    export const deleteTurno = (id, next) => async (dispatch) => {
+    export const deleteTurno = (id, token) => async (dispatch) => {
         try {
             const res = await axios.delete(
-                `${URL_actions}/turno/delete/${id}`
+                `${URL_actions}/turno/delete/${id}`, { headers: {
+                    'Authorization': `Bearer ${token}`
+                }}
             );
-            next();
             dispatch({
                 type: DELETE_TURNO,
                 payload: res.data,
             });
         } catch (err) {
-            console.log(err);
+            alert(err.response.data);
         }
     }
 

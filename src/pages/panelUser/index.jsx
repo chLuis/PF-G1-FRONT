@@ -39,7 +39,7 @@ export const PanelUser = () => {
 
 
     useEffect(() => {
-        dispatch(getTurnos())
+        dispatch(getTurnos(token))
         dispatch(getEspecialidades())
     },[])
 
@@ -60,11 +60,11 @@ export const PanelUser = () => {
     useEffect(() => {
         !dniSearchUser?setDniSearchUser(false):false;
     }, [dniSearchUser]);
-//console.log(administrador)
+
     useEffect(() => {
         if(administrador){
             dispatch(getDoctorsAdmin(token));
-            dispatch(getUsers())
+            dispatch(getUsers(token))
             setUserImage(adminPic)
             setTipoUsuario("Administrador")
         } else if(medico) {
@@ -102,8 +102,8 @@ export const PanelUser = () => {
                     }
                     if (result.isConfirmed) {
                         let turnoId = turno._id;
-                        await dispatch(deleteTurno(turnoId));
-                        dispatch(getTurnos());
+                        await dispatch(deleteTurno(turnoId, token));
+                        dispatch(getTurnos(token));
                         swalWithBootstrapButtons.fire(
                             "Borrado!",
                             "Has borrado este turno.",

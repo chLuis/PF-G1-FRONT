@@ -13,6 +13,7 @@ export const MostrarUsuarios = () => {
 
     //const doctors = useSelector((state) => state.userReducer.doctors);
     //const doctorsAdmin = useSelector((state) => state.userReducer.doctorsAdmin);
+    const { token } = useSelector((state) => state.userReducer.user);
     const users = useSelector((state) => state.userReducer.users);
     const turnos = useSelector((state) => state.userReducer.turnos);
     //const especialidades = useSelector((state) => state.userReducer.especialidades) || [];
@@ -44,58 +45,54 @@ export const MostrarUsuarios = () => {
         setListUsersShow(false)
     }
 
-        //Funcion para mostrar todos los usuarios
-        function showAllUsers() {
-            dispatch(getUsers());
-            setListUsersShow(!listUsersShow);
-        }
+    //Funcion para mostrar todos los usuarios
+    function showAllUsers() {
+        dispatch(getUsers(token));
+        setListUsersShow(!listUsersShow);
+    }
     //Funcion para borrar un usuario de la base de datos 
     async function deleteUserSelected(user) {
-        //console.log(user)
         let conTurnoAsignado = false
         turnos?.map((turno) => {
-            if(turno.doctor_id === user.id_user || turno.paciente_id === user.id_user){
-                //console.log(turno.doctor_id)
-                //console.log(turno.paciente_id)
-                //console.log("EStoy aquyi?=")
-                conTurnoAsignado = true
-            }    
-        })
-        if(conTurnoAsignado){
-            return swalWithBootstrapButtons.fire(
-                "Acción cancelada",
-                "No puedes borrar usuarios que tengan turnos asignados",
-                "error"
-            );
-        }
-        swalWithBootstrapButtons
-            .fire({
-                title: "¿Estas seguro?",
-                text: "Vas a borrar a este usuario de la base de datos",
-                icon: "info",
-                showCancelButton: true,
-                confirmButtonText: "Si! Borrar!",
-                cancelButtonText: "No, conservar!",
-                reverseButtons: true,
+            if(turno.doctor_id === user.id_user || turno.paciente_id === user.id_user)
+                {
+                    conTurnoAsignado = true}    
             })
-            .then(async (result) => {
-                if (result.isConfirmed) {
-                    let userId = user.id_user;
-                    await dispatch(deleteUser(userId));
-                    dispatch(getUsers());
-                    swalWithBootstrapButtons.fire(
-                        "Borrado!",
-                        "Has borrado a este usuario de la base de datos.",
-                        "success"
-                    );
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
-                    swalWithBootstrapButtons.fire(
-                        "Acción cancelada",
-                        "Este usuario se ha conservado",
-                        "info"
-                    );
-                }
-            });
+            if(conTurnoAsignado){
+                return swalWithBootstrapButtons.fire(
+                    "Acción cancelada",
+                    "No puedes borrar usuarios que tengan turnos asignados",
+                    "error"
+                );
+            }
+            swalWithBootstrapButtons
+                .fire({
+                    title: "¿Estas seguro?",
+                    text: "Vas a borrar a este usuario de la base de datos",
+                    icon: "info",
+                    showCancelButton: true,
+                    confirmButtonText: "Si! Borrar!",
+                    cancelButtonText: "No, conservar!",
+                    reverseButtons: true,
+                })
+                .then(async (result) => {
+                    if (result.isConfirmed) {
+                        let userId = user.id_user;
+                        await dispatch(deleteUser(userId, token));
+                        dispatch(getUsers(token));
+                        swalWithBootstrapButtons.fire(
+                            "Borrado!",
+                            "Has borrado a este usuario de la base de datos.",
+                            "success"
+                        );
+                    } else if (result.dismiss === Swal.DismissReason.cancel) {
+                        swalWithBootstrapButtons.fire(
+                            "Acción cancelada",
+                            "Este usuario se ha conservado",
+                            "info"
+                        );
+                    }
+                });
     }
 
 
