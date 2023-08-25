@@ -50,7 +50,7 @@ export const AprobarDoctor = () => {
     }
     //Actualiza el doc como aprobado
     async function refreshDoctors(doctorId, aprobado) {
-        await dispatch(putDoctor(doctorId, aprobado));
+        await dispatch(putDoctor(doctorId, aprobado, token));
         dispatch(getDoctorsAdmin(token));
         dispatch(getEspecialidades());
     }
@@ -127,8 +127,8 @@ export const AprobarDoctor = () => {
             })
             .then(async (result) => {
                 if (result.isConfirmed) {
-                    let doctorId = doc.id_user;
-                    await dispatch(deleteDoctor(doctorId));
+                    //let doctorId = "sdf";
+                    await dispatch(deleteDoctor(doc.id_user, token));
                     dispatch(getDoctorsAdmin(token));
                     swalWithBootstrapButtons.fire(
                         "Borrado!",

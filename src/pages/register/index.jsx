@@ -87,7 +87,6 @@ export const Register = () => {
         const currentDate = new Date();
         const edadMaxima = new Date();
         edadMaxima.setFullYear(edadMaxima.getFullYear() - 100);
-        //console.log("edadMaxima",edadMaxima);
         if (fechaNacimientoDate > currentDate) {
             Swal.fire({
                 icon: 'error',

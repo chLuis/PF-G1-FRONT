@@ -7,6 +7,7 @@
 
 .div-btn-showAll-and-input button{
     width: 140px;
+    transition: 0.2s;
 }
 .searchDNI {
     color: black !important;
