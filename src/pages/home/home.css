@@ -144,12 +144,11 @@
 
 
 
-  @media (max-width: 375px) {
+  @media (max-width: 500px) {
     .letras-in,
     .letras-static {
-      display: none;
+      font-size: 18px;
     }
-    
   }
 
 

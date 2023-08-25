@@ -16,17 +16,28 @@ export const Navbarr = () => {
   
   const dispatch = useDispatch();
   const Navigate = useNavigate();
-  const {user} = useSelector((state) => state.userReducer) || "";
+  const {user, especialidades, doctors} = useSelector((state) => state.userReducer) || "";
+//  const especialidades = useSelector((state) => state.userReducer.es) || [];
   
-
+//console.log(especialidades)
   const [isOpen, setIsOpen] = useState(false); // Abre o cierra el panel de opciones cuando estamos en tamañó mobile
   const [mostrar, setMostrar] = useState(false) // muestra btn de login cuando no hay usuario conectado
+  //const especialidades = useSelector((state) => state.userReducer.especialidades) || [];
+
+    let especialidadesDoctores = []
+    doctors?.map((doctor) => {
+        doctor.aprobado
+        ? especialidadesDoctores.push(doctor.especialidad)
+        : null
+    })
+    const especialidadArray = new Set(especialidadesDoctores)
+    const especialidadesDoctorAprobado = [...especialidadArray]
 
   useEffect (() => {
-    salirTest()
+    saludarUser()
   },[user])
 
-  function salirTest() {
+  function saludarUser() {
     dispatch(getDoctors())
     if(user){
       setMostrar(false)
@@ -71,7 +82,7 @@ export const Navbarr = () => {
                 <i className="fa-regular fa-paper-plane"></i><span className='navbar-links-text'>Contact</span>
               </Nav.Link>
               <NavDropdown title="🥼 Especialistas" id="basic-nav-dropdown" className='navbar-links-drop'>
-                <NavDropdown.Item href="/#Cardiología" onClick={() => setIsOpen(!isOpen)} className='navbar-dropdown-links'>
+                {/* <NavDropdown.Item href="/#Cardiología" onClick={() => setIsOpen(!isOpen)} className='navbar-dropdown-links'>
                   <span>Cardiología</span>
                 </NavDropdown.Item>
                 <NavDropdown.Item href="/#Dermatología" onClick={() => setIsOpen(!isOpen)} className='navbar-dropdown-links'>
@@ -87,7 +98,10 @@ export const Navbarr = () => {
                 </NavDropdown.Item>
                 <NavDropdown.Item href="/#Traumatología" onClick={() => setIsOpen(!isOpen)} className='navbar-dropdown-links'>
                   <span>Traumatología</span>
-                </NavDropdown.Item>
+                </NavDropdown.Item> */}
+                {especialidades?.map((especialidad, i) => (
+                  especialidadesDoctorAprobado.includes(especialidad.especialidad) &&<NavDropdown.Item key={i} href={`#/#${especialidad.especialidad}`} onClick={() => setIsOpen(!isOpen)} className='navbar-dropdown-links'><span>{especialidad.especialidad}</span>
+                  </NavDropdown.Item>))}
               </NavDropdown>
               {mostrar &&
               <span className="navbar-links navbar-login">
