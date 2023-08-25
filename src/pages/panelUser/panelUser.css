@@ -1,7 +1,12 @@
 .panelUser{
     min-height: 90dvh;
-    margin: 0px !important;
-    margin-top: 20px;
+    margin: 20px 0px 0px 0px !important;
+}
+.panelUserDeslog{
+    height: 85dvh;
+    display: grid;
+    place-content: center;
+    background-color: rgba(0, 0, 0, 0.339);
 }
 .panelUserData{
     max-width: 99% !important;
@@ -9,9 +14,13 @@
 .panelUserData p {
     margin: 1px;
 }
+.datos-user{
+    margin: 0px 0px 18px 0px !important;
+    max-width: 100% !important;
+}
 .panelUser-column {
     display: grid;
-    grid-template-columns: 25% minmax(auto,2fr );
+    grid-template-columns: 20% minmax(auto,2fr );
     gap: 20px;
 }
 .panelUser-column img {
@@ -24,23 +33,25 @@
     border-radius: 10px;
     text-align: left;
     padding: 10px;
-    width: 95%;
+    width: 100%;
 }
 
-.panelUser-column h2 {
+.panelUser-column h2,
+.panelUser-column h4 {
     text-decoration: underline;
+    padding-block: 3px;
 }
-
-.turnos-panel-show{
-    position: relative;
-    max-width: 85dvw;
-    margin: 3px !important;
-    padding: 0 !important;
-    line-height: 34px;
-    display: grid;
-    grid-template-columns: 4fr 0.5fr;
-    border-bottom: 1px solid black;
-    gap: 4px;
+.btn-delete-admin {
+    background-color: red !important;
+    width: 94px;
+    height: 38px;
+    align-self: center !important;
+    transition: 0.2s;
+    border-radius: 8px !important;
+}
+.btn-delete-admin:hover {
+    scale: 1.1;
+    background-color: rgb(141, 16, 16) !important;
 }
 
 .columnDoctorsToAprobe{
@@ -50,25 +61,7 @@
     place-items: center !important;
 
 }
-.doctorToApprove{
-    max-width: 85dvw;
-    margin: 3px !important;
-    padding: 0 !important;
-    line-height: 34px;
-    display: grid;
-    grid-template-columns: 2fr 1.2fr 0.5fr;
-    border-bottom: 1px solid black;
-    gap: 4px;
-}
-.turnos-panel-show:hover,
-.doctorToApprove:hover{
-    cursor: pointer;
-    transition: 0.15s;
-    background-color: rgb(136, 135, 135) !important;
-}
-.doctorToAprobe span  {
-    margin: auto 0px !important;
-}
+
 .columnDoctorsToAprobe button{
     color: rgb(230, 230, 230) !important;
     background-color: green;
@@ -85,149 +78,15 @@
 .columnDoctorsToAprobe input:focus{
     box-shadow: 0px 0px 10px 6px rgba(7,224,195,1);
 }
-.div-btn-showAll-and-input{
-    display: flex;
-    gap: 6px;
-    place-content: center;
-    max-width: 100%;
-}
 
-.div-btn-showAll-and-input button{
-    width: 140px;
-}
-
-.searchDNI {
-    color: black !important;
-}
-.btn-approve-admin{
-    background-color: rgb(0, 107, 0) !important;
-    width: 86px;
-    height: 38px;
-    align-self: center;
-}
-.btn-disapprove-admin{
-    background-color: rgb(0, 43, 143) !important;
-    width: 86px;
-    height: 38px;
-    align-self: center;
-}
-.btn-update-img{
-    background-color: rgb(0, 107, 0) !important;
-    min-width: 110px;
-    height: 38px;
-    align-self: center;
-}
-.btn-delete-admin{
-    background-color: red !important;
-    width: 94px;
-    height: 38px;
-    align-self: center !important;
-}
-.btn-manage-doc{
-    display: flex;
-    margin: 1px 3px;
-
-}
-.turnosPorDni{
-    padding-top: 10px;
-}
-.h4-add-especialidades{
-    position: relative;
-    padding: 0 !important;
-    margin-top: 16px;
-    text-align: center;
-}
-.div-add-especialidades {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    max-width: 100%;
-}
-.div-add-especialidades-input {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-.div-add-especialidades-input label{
-    width: 100px;
-}
-.div-add-especialidades-input input{
-    padding: 0px 3px;
-    width: 280px;
-    color: black !important;
-}
-
-.div-delete-especialidades{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0px !important;
-    max-width: 100%;
-}
-.span-especialidades {
-    width: 160px !important;
-}
-.span-danger{
-    color: red !important;
-}
-
-.div-update-img-especialidades{
-    position: fixed;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    top: 10%;
-    left: 16%;
-    right: 16%;
-    max-width: 65dvw;
-    background-color: black !important;
-    height: 80dvh !important;
-    z-index: 4;
-}
-.div-update-img-especialidades h5 {
-    padding-bottom: 60px;
-    text-align: center;
-}
-.div-update-img-especialidades label {
-    font-size: 2rem;
-    display: flex;
-    justify-content: center;
-    align-items: end;
-    height: 36px;
-    max-width: 80dvw !important;
-    margin: 10px 0px;
-    padding-bottom: 20px;
-}
-.div-update-img-especialidades input {
-    height: 36px;
-    max-width: 100% !important;
-    margin: 10px 0px;
-    color: black !important;
-}
-.btn-div-update-img{
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-}
-.btn-update-img {
-    background-color: rgb(0, 43, 143) !important;
-    max-width: 80px;
-
-}
-.btn-div-update-img .cancelar-img {
-    background-color: red;
-}
 
 @media (max-width: 930px) {
     .panelUser-column img  {
         display: none;
     }
     .panelUser-column div{
-        width: 95dvw;
-        margin: 0px 12px 0px 12px;
+        width: 97dvw;
+        margin: 0px 12px 0px 4px;
     }
     .panelUser {
         margin: auto !important;
@@ -237,44 +96,6 @@
     }
 }
 
-.tooltipPanel {
-    position: absolute;
-    top: 0;
-    font-size: 0.8rem;
-    background: #fff;
-    color: #fff;
-    border-radius: 5px;
-    opacity: 0 !important;
-    pointer-events: none;
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-.tooltipPanel::before{
-    position: absolute;
-    content: "";
-    height: 8px;
-    width: 8px;
-    background: #fff;
-    bottom: -3px;
-    left: 50%;
-    transform: translate(-50%) rotate(45deg);
-    transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-.turnos-panel-show:hover .tooltipPanel{
-    top: -45px;
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto;
-    color: black !important;
-    padding-inline: 10px;
-}
-.h4-add-especialidades:hover .tooltipPanel{
-    top: -45px;
-    opacity: 1 !important;
-    visibility: visible !important;
-    pointer-events: auto;
-    color: black !important;
-    padding-inline: 10px;
-}
 .fueraDeFecha{
     background-color: black !important;
 }

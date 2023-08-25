@@ -1,0 +1,40 @@
+.div-btn-showAll-and-input{
+    display: flex;
+    gap: 6px;
+    place-content: center;
+    max-width: 100%;
+}
+.div-btn-showAll-and-input button {
+    width: 140px;
+}
+.searchDNI {
+    color: black !important;
+    max-width: 140px;
+    padding-inline: 4px;
+}
+.doctorToApprove{
+    max-width: 85dvw;
+    margin: 3px !important;
+    padding: 0 !important;
+    line-height: 34px;
+    display: grid;
+    grid-template-columns: 2fr 1.2fr 0.5fr;
+    border-bottom: 1px solid black;
+    gap: 4px;
+}
+.doctorToApprove:hover{
+    cursor: pointer;
+    transition: 0.15s;
+    background-color: rgb(136, 135, 135) !important;
+}
+.btn-manage-doc{
+    display: flex;
+    margin: 1px 3px;
+    gap: 2px
+}
+.btn-delete-admin{
+    background-color: red !important;
+    width: 94px;
+    height: 38px;
+    align-self: center !important;
+}
