@@ -13,6 +13,7 @@ export const Turnos = () => {
     const user = useSelector((state) => state.userReducer.user.dni);
     const turnos = useSelector((state) => state.userReducer.turnos) || "";
     const especialidades = useSelector((state) => state.userReducer.especialidades) || []
+    const { token } = useSelector((state) => state.userReducer.user);
 
     const [dni, setDni] = useState(user);
     const [especialidadSeleccionadaInput, setEspecialidadSeleccionadaInput] = useState("");
@@ -33,7 +34,7 @@ export const Turnos = () => {
     const especialidadesDoctorAprobado = [...especialidadArray]
 
     useEffect(() => {
-        dispatch(getTurnos());
+        dispatch(getTurnos(token));
     }, [user]);
 
     function handleMedic(e) {
@@ -115,7 +116,6 @@ export const Turnos = () => {
             turnosOcupados.push(turno.horario.split(":")[0]);
         }
     });
-    //console.log(turnosOcupados);
 
     return (
         <div className="turnos form-wrapper">

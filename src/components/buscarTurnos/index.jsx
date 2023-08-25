@@ -11,6 +11,7 @@ export const BuscarTurnos = () => {
     const dispatch = useDispatch();
     
     const turnos = useSelector((state) => state.userReducer.turnos);
+    const { token } = useSelector((state) => state.userReducer.user);
     const [dniTurno, setDniTurno] = useState(false);                         // buscar por dni turnos
     
     const swalWithBootstrapButtons = Swal.mixin({
@@ -20,7 +21,6 @@ export const BuscarTurnos = () => {
         },
         buttonsStyling: false,
     });
-
 
     function guardarDNITurnos(e){
         setDniTurno(e)
@@ -41,8 +41,8 @@ export const BuscarTurnos = () => {
                 .then(async (result) => {
                     if (result.isConfirmed) {
                         let turnoId = turno._id;
-                        await dispatch(deleteTurno(turnoId));
-                        dispatch(getTurnos());
+                        await dispatch(deleteTurno(turnoId, token));
+                        dispatch(getTurnos(token));
                         swalWithBootstrapButtons.fire(
                             "Borrado!",
                             "Has borrado este turno.",
