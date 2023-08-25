@@ -24,8 +24,8 @@ export const SacarTurno = () => {
         <span className={turnos} onClick={sacarTurno}>Turno</span>
         <span className={turnos_especialidad}>
             <div className='div-turnos-component'>
-                <div className='btn-sacarTurno'><a href='/Turnos'>Sacar turno</a></div>
-                <div className='btn-misTurnos'><a href='/PanelUser'>Mis turnos</a></div>
+                <div className='btn-sacarTurno'><a href='#/Turnos'>Sacar turno</a></div>
+                <div className='btn-misTurnos'><a href='#/PanelUser'>Mis turnos</a></div>
             </div>
         </span>
     </div>
