@@ -56,6 +56,8 @@ export const PanelUser = () => {
     const [especialidadUpdate, setEspecialidadUpdate] = useState("")                // Escribe el nombre de la especialidad a modificar en label
     const [especialidadImg, setEspecialidadImg] = useState("")                      // Input de la nueva img para la especialidad seleccionada
     const [idEspecialidad, setIdEspecialidad] = useState("")                        // Id de la especialidad seleccionada para patch img
+    const fechaActual = new Date().toISOString();
+
     //const [paciente, setPaciente] = useState()
     
     //Muestra la lista de doctores que necesitan aprobacion para figurar en tarjetas de entrada
@@ -72,6 +74,8 @@ export const PanelUser = () => {
     async function refreshDoctors(doctorId, aprobado) {
         await dispatch(putDoctor(doctorId, aprobado));
         dispatch(getDoctorsAdmin(token));
+        dispatch(getEspecialidades())
+
         //console.log("refresco");
     }
     //https://img.freepik.com/vector-premium/medico-cirujano-concepto_108855-4197.jpg
@@ -119,7 +123,7 @@ export const PanelUser = () => {
                 if (result.isConfirmed) {
                     refreshDoctors(doctorId, aprobado);
                     swalWithBootstrapButtons.fire(
-                        "Aprobado!",
+                        "Removido!",
                         "Has quitado a este Medico de la lista de autorizados.",
                         "success"
                     );
@@ -171,6 +175,7 @@ export const PanelUser = () => {
     // console.log(foundUser)
     useEffect(() => {
         dispatch(getTurnos())
+        dispatch(getEspecialidades())
     },[])
 
     //Funcion para borrar un usuario de la base de datos 
@@ -248,7 +253,7 @@ export const PanelUser = () => {
     useEffect(() => {
         !dniSearchUser?setDniSearchUser(false):false;
     }, [dniSearchUser]);
-
+console.log(administrador)
     useEffect(() => {
         if(administrador){
             dispatch(getDoctorsAdmin(token));
@@ -477,7 +482,8 @@ export const PanelUser = () => {
                             {turnos &&<>
                             <h4>Mis turnos</h4>
                             {turnos?.map((turno, i) => turno.paciente_id === _id
-                            ? <div className="turnos-panel-show" key={i}><span className="tooltipPanel">Motivo de la consulta: {turno.motivo}</span><p>{turno.fecha.split("T")[0]} (mm/dd), Hs: {turno.horario}:00 Espec.: {turno.especialidad} -  Dr. {turno.doctorNombre} </p> <button className="btn-delete-admin" onClick={() => borrarTurno(turno, turno.fecha)}>Cancelar</button></div>
+                            ? turno.fecha < fechaActual ? <div className="turnos-panel-show fueraDeFecha" key={i}><span className="tooltipPanel">Motivo de la consulta: {turno.motivo}</span><p>{turno.fecha.split("T")[0]} (mm/dd), Hs: {turno.horario}:00 Espec.: {turno.especialidad} -  Dr. {turno.doctorNombre} </p></div>
+                            : <div className="turnos-panel-show" key={i}><span className="tooltipPanel">Motivo de la consulta: {turno.motivo}</span><p>{turno.fecha.split("T")[0]} (mm/dd), Hs: {turno.horario}:00 Espec.: {turno.especialidad} -  Dr. {turno.doctorNombre} </p> <button className="btn-delete-admin" onClick={() => borrarTurno(turno, turno.fecha)}>Cancelar</button></div>
                             : null
                             
                             )}</>}
@@ -817,7 +823,7 @@ export const PanelUser = () => {
                                         </div>
                                     </>
                                     <>
-                                        <h4 className="h4-add-especialidades">⚠️ <span className="span-danger">Danger zone!</span> Editar Especialidades</h4></>
+                                        <h4 className="h4-add-especialidades">⚠️ <span className="tooltipPanel">Los cambios que realice aquí pueden afectar negativamente el funcionamiento de la página</span><span className="span-danger">Danger zone!</span> Editar Especialidades</h4></>
                                         {especialidades?.map((especialidad, i) =>
                                             <div key={i} className="div-delete-especialidades">
                                                 <label className="span-especialidades">{especialidad.especialidad}</label>

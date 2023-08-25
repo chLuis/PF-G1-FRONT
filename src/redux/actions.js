@@ -136,7 +136,15 @@ export const getDoctorsAdmin = (token) => async (dispatch) => {
             payload: res.data,
         });
     } catch (err) {
-        console.log(err.message);
+        if(err.response.data === "jwt expired"){
+            alert("Su sesión expiró, debe loguearse de nuevo");
+            return dispatch({
+                type: LOGGED_OUT,
+            });
+        } else {
+            console.log(err)
+        }
+        
     }
 };
 
