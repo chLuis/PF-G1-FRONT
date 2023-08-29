@@ -49,6 +49,14 @@
     transition: 0.2s;
     border-radius: 8px !important;
 }
+.btn-delete-admin-vencido {
+    background-color: rgb(49, 49, 49) !important;
+    width: 94px;
+    height: 38px;
+    align-self: center !important;
+    transition: 0.2s;
+    border-radius: 8px !important;
+}
 .btn-delete-admin:hover {
     scale: 1.1;
     background-color: rgb(141, 16, 16) !important;

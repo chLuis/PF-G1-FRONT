@@ -23,6 +23,7 @@ export const Turnos = () => {
     const [hora, setHora] = useState("");
     const [motivo, setMotivo] = useState("");
     const [btnSolicitar, setBtnSolicitar] = useState(true)
+    const [turnoEnviado, setTurnoEnviado] = useState(false)
 
     let especialidadesDoctores = []
     doctors?.map((doctor) => {
@@ -65,6 +66,7 @@ export const Turnos = () => {
     );
 
     function turnoSet(e) {
+        setTurnoEnviado(!turnoEnviado)
         e.preventDefault();
         let fechaDate = new Date(fecha);
         let currentDate = new Date();
@@ -76,7 +78,7 @@ export const Turnos = () => {
                 title: 'FECHA: datos incorrectos!',
                 text: 'El turno debe ser solicitado 24 horas antes.',
               })
-              return
+              return setTurnoEnviado(!turnoEnviado)
         }
         if (fechaDate > maxDate) {
             Swal.fire({
@@ -84,7 +86,7 @@ export const Turnos = () => {
                 title: 'FECHA: datos incorrectos!',
                 text: 'La fecha no puede ser posterior a 30 días a partir de hoy.',
             });
-            return;
+            return setTurnoEnviado(!turnoEnviado)
         }
         const turno = {
             dniPaciente: dni,
@@ -100,7 +102,7 @@ export const Turnos = () => {
         turno ? dispatch(postTurno(turno)) : null;
             setTimeout(() => {
                 Navigate("/");
-            }, 1500)
+            }, 2500)
     }
     const turnosOcupados = [];
     turnos?.forEach((turno) => {
@@ -209,7 +211,7 @@ export const Turnos = () => {
                     <input type="text" required onChange={handleMotivo} />
                     <label>Motivo de la consulta</label>
                 </div>}
-                <button type="submit" disabled={btnSolicitar}>Solicitar</button>
+                {!turnoEnviado &&<button type="submit" disabled={btnSolicitar}>Solicitar</button>}
             </form>}
         </div>
     );
