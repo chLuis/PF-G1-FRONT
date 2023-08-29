@@ -40,7 +40,7 @@
 }
 .btn-approve-admin{
     background-color: rgb(0, 107, 0) !important;
-    width: 86px;
+    width: 94px !important;
     height: 38px;
     align-self: center;
 }
@@ -53,9 +53,19 @@
 }
 .btn-disapprove-admin{
     background-color: rgb(0, 43, 143) !important;
-    width: 80px;
+    width: 94px;
     height: 38px;
     align-self: center;
     transition: 0.2s;
     border-radius: 8px !important;
 }
+.btn-div-approve{
+    display: flex;
+    width: 100% !important;
+}
+@media (max-width: 620px){
+.btn-div-approve{
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+}}

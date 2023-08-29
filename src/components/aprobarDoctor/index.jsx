@@ -130,11 +130,6 @@ export const AprobarDoctor = () => {
                     //let doctorId = "sdf";
                     await dispatch(deleteDoctor(doc.id_user, token));
                     dispatch(getDoctorsAdmin(token));
-                    swalWithBootstrapButtons.fire(
-                        "Borrado!",
-                        "Has borrado a este doctor de la base de datos.",
-                        "success"
-                    );
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
                         "Acción cancelada",
@@ -176,6 +171,7 @@ export const AprobarDoctor = () => {
                                 </span>
                                 <span>DNIº {doctor.dni}</span>
                                 <span className="btn-manage-doc">
+                                    <div className='btn-div-approve'>
                                     <button
                                         className="btn-approve-admin"
                                         onClick={() =>
@@ -192,6 +188,7 @@ export const AprobarDoctor = () => {
                                     >
                                         Eliminar
                                     </button>
+                                    </div>
                                 </span>
                             </div>
                         ) : null
@@ -209,6 +206,7 @@ export const AprobarDoctor = () => {
                             </span>
                             <span>DNIº {doctor.dni}</span>
                             <span className="btn-manage-doc">
+                            <div className='btn-div-approve'>
                                 <button
                                     className="btn-approve-admin"
                                     onClick={() => changeAprobado(doctor, true)}
@@ -221,6 +219,7 @@ export const AprobarDoctor = () => {
                                 >
                                     Eliminar
                                 </button>
+                                </div>
                             </span>
                         </div>
                     );
@@ -258,6 +257,7 @@ export const AprobarDoctor = () => {
                                     </span>
                                     <span>DNIº {doctor.dni}</span>
                                     <span className="btn-manage-doc">
+                                    <div className='btn-div-approve'>
                                         <button
                                             className="btn-disapprove-admin"
                                             onClick={() =>
@@ -274,6 +274,7 @@ export const AprobarDoctor = () => {
                                         >
                                             Eliminar
                                         </button>
+                                        </div>
                                     </span>
                                 </div>
                             ) : null
@@ -291,6 +292,7 @@ export const AprobarDoctor = () => {
                                 </span>
                                 <span>DNIº {doctor.dni}</span>
                                 <span className="btn-manage-doc">
+                                <div className='btn-div-approve'>
                                     <button
                                         className="btn-disapprove-admin"
                                         onClick={() =>
@@ -307,6 +309,7 @@ export const AprobarDoctor = () => {
                                     >
                                         Eliminar
                                     </button>
+                                    </div>
                                 </span>
                             </div>
                         );

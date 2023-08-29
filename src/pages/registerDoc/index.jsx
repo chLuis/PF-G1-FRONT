@@ -135,7 +135,7 @@ export const RegisterDoc = () => {
         if ( password != passwordRepeat){
             Swal.fire({
                 icon: 'error',
-                title: 'CONTRASEñA: datos incorrectos!',
+                title: 'CONTRASEÑA: datos incorrectos!',
                 text: 'Las contraseñas deben coincidir.'
               })
               return
@@ -171,7 +171,7 @@ export const RegisterDoc = () => {
         setPasswordRepeat(''); 
         setTimeout(() => {
             Navigate("/");
-        }, 5000) 
+        }, 4500) 
       };
 
       const [isFocusedDate, setIsFocusedDate] = useState(false);
