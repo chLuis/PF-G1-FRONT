@@ -11,28 +11,13 @@ export const MostrarUsuarios = () => {
 
     const dispatch = useDispatch();
 
-    //const doctors = useSelector((state) => state.userReducer.doctors);
-    //const doctorsAdmin = useSelector((state) => state.userReducer.doctorsAdmin);
     const { token } = useSelector((state) => state.userReducer.user);
     const users = useSelector((state) => state.userReducer.users);
     const turnos = useSelector((state) => state.userReducer.turnos);
-    //const especialidades = useSelector((state) => state.userReducer.especialidades) || [];
 
-    //const [listDoctorsForAprobe, setListDoctorsForAprobe] = useState(false);        // mostrar lista para aprobar
-    //const [listDoctorsForDisapprove, setListDoctorsForDisapprove] = useState(false);// mostrar lista para aprobar
     const [listUsersShow, setListUsersShow] = useState(false);                      // mostrar ocultar lista
-    //const [dniSearch, SetDniSearch] = useState(false);                              // buscar por dni (oculta la lista)
     const [dniSearchUser, setDniSearchUser] = useState(false);                      // buscar por dni
-    //const [dniTurno, setDniTurno] = useState(false);                                // buscar por dni turnos
-    //const [userImage, setUserImage] = useState("")                                  // Modifica la imagen de log
-    //const [tipoUsuario, setTipoUsuario] = useState("")                              // Clasifica al user por Doc/Paciente/Administrador
-    //const [nuevaEspecialidad, setNuevaEspecialidad] = useState("")                  // Input de la especialidad a agregar
-    //const [imagenNuevaEspecialidad, setImagenNuevaEspecialidad] = useState("")      // input de la img de la nueva especialidad
-    //const [editImage, setEditImage] = useState(false)                               // Modal para editar la img de una especialidad
-    //const [especialidadUpdate, setEspecialidadUpdate] = useState("")                // Escribe el nombre de la especialidad a modificar en label
-    //const [especialidadImg, setEspecialidadImg] = useState("")                      // Input de la nueva img para la especialidad seleccionada
-    //const [idEspecialidad, setIdEspecialidad] = useState("")                        // Id de la especialidad seleccionada para patch img
-    //const fechaActual = new Date().toISOString();
+
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
             confirmButton: "btn btn-success",
@@ -124,8 +109,8 @@ export const MostrarUsuarios = () => {
                                                     className="doctorToApprove"
                                                 >
                                                     <span>
-                                                        {user.nombre}{" "}
-                                                        {user.apellido} - {" "}
+                                                        {user.apellido}{" "}
+                                                        {user.nombre} - {" "}
                                                         {user.medico}
                                                     </span>
                                                     <span>
@@ -155,8 +140,8 @@ export const MostrarUsuarios = () => {
                                                     className="doctorToApprove"
                                                 >
                                                     <span>
-                                                        {user.nombre}{" "}
-                                                        {user.apellido} - {" "}
+                                                        {user.apellido}{" "}
+                                                        {user.nombre} - {" "}
                                                         {user.medico}
                                                     </span>
                                                     <span>
