@@ -121,7 +121,7 @@ export const Register = () => {
         if ( password != passwordRepeat){
             Swal.fire({
                 icon: 'error',
-                title: 'CONTRASEñA: datos incorrectos!',
+                title: 'CONTRASEÑA: datos incorrectos!',
                 text: 'Las contraseñas deben coincidir.'
               })
               return

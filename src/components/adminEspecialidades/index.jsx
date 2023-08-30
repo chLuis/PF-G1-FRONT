@@ -13,6 +13,7 @@ export const AdminEspecialidades = () => {
     const dispatch = useDispatch();
 
     const doctors = useSelector((state) => state.userReducer.doctors);
+    const token = useSelector((state) => state.userReducer.user.token);
     const especialidades =
         useSelector((state) => state.userReducer.especialidades) || [];
 
@@ -58,13 +59,8 @@ export const AdminEspecialidades = () => {
             })
             .then(async (result) => {
                 if (result.isConfirmed) {
-                    await dispatch(deleteEspecialidad(id_especialidad));
+                    await dispatch(deleteEspecialidad(id_especialidad,token));
                     dispatch(getEspecialidades());
-                    swalWithBootstrapButtons.fire(
-                        "Eliminada!",
-                        "Has eliminado esta especialidad.",
-                        "success"
-                    );
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
                         "Acción cancelada",
@@ -104,15 +100,12 @@ export const AdminEspecialidades = () => {
                     await dispatch(
                         postEspecialidad(
                             nuevaEspecialidad,
-                            imagenNuevaEspecialidad
+                            imagenNuevaEspecialidad,
+                            token
                         )
                     );
                     dispatch(getEspecialidades());
-                    swalWithBootstrapButtons.fire(
-                        "Agregada!",
-                        "Has agregado esta especialidad.",
-                        "success"
-                    );
+
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
                         "Acción cancelada",
@@ -147,14 +140,9 @@ export const AdminEspecialidades = () => {
             .then(async (result) => {
                 if (result.isConfirmed) {
                     await dispatch(
-                        patchEspecialidad(idEspecialidad, especialidadImg)
+                        patchEspecialidad(idEspecialidad, especialidadImg, token)
                     );
                     dispatch(getEspecialidades());
-                    swalWithBootstrapButtons.fire(
-                        "Actualizada!",
-                        "Has actualizado la imagen de esta especialidad.",
-                        "success"
-                    );
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
                         "Acción cancelada",

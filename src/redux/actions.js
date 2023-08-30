@@ -22,7 +22,8 @@ import {
 } from "./types";
 import Swal from "sweetalert2";
 
-const URL_actions = "http://localhost:8080"//  // "https://pf-back-vd4v-dev.fl0.io" 
+const URL_actions = "https://pf-back-vd4v-dev.fl0.io" //  //  "http://localhost:8080"
+
 
 export const postDoctor = (user) => async (dispatch) => {
     try {
@@ -42,13 +43,13 @@ export const postDoctor = (user) => async (dispatch) => {
             (doctor) => doctor.mail
         );
         const emailsPac = Object.values(existingPaciente.data).map(
-            (pac) => pac.usuario.mail
+            (pac) => pac.mail
         );
         const arrayDniDoc = Object.values(existingDoctor.data).map(
             (doctor) => doctor.dni
         );
         const arrayDniPac = Object.values(existingPaciente.data).map(
-            (pac) => pac.usuario.dni
+            (pac) => pac.dni
         );
         const dniIngresado = parseInt(user.dni);
 
@@ -139,10 +140,12 @@ export const getDoctorsAdmin = (token) => async (dispatch) => {
         });
     } catch (err) {
         if(err.response.data === "jwt expired"){
-            alert("Su sesión expiró, debe loguearse de nuevo");
-            return dispatch({
-                type: LOGGED_OUT,
-            });
+            Swal.fire({
+                icon: "error",
+                title: "Surgió un error",
+                text: `${err.response.data}`,
+            })
+            logoutUser()
         } else {
             console.log(err)
         }
@@ -192,7 +195,12 @@ export const putDoctor = (doctor, aprobar, token) => async (dispatch) => {
                 payload: res.data,
             })
         } catch (err) {
-            alert(err.response.data);
+            Swal.fire({
+                icon: "error",
+                title: "Surgió un error",
+                text: `${err.response.data}`,
+            });
+            dispatch(logoutUser())
         }
     }
     //console.log("ID Debe proveerse");
@@ -208,10 +216,18 @@ export const deleteDoctor = (id, token) => async (dispatch) => {
         dispatch({
             type: DELETE_DOCTOR,
             payload: res.data,
-        });
+        })
+        Swal.fire(
+            "Borrado!",
+            "Has borrado a este doctor de la base de datos.",
+            "success"
+        );
     } catch (err) {
-        console.log(err.message)
-        console.log(err.response.data);
+        Swal.fire({
+            icon: "error",
+            title: "Surgió un error",
+            text: `${err.response.data}`,
+        })
     }
 };
 
@@ -284,7 +300,12 @@ export const getUsers = (token) => async (dispatch) => {
             payload: res.data,
         });
     } catch (err) {
-        console.log(err.response.data);
+        Swal.fire({
+            icon: "error",
+            title: "Surgió un error",
+            text: `${err.response.data}`,
+        })
+        dispatch(logoutUser())
     }
 };
 
@@ -306,7 +327,12 @@ export const deleteUser = (id, token) => async (dispatch) => {
             payload: res.data,
         });
     } catch (err) {
-        alert(err.response.data);
+        Swal.fire({
+            icon: "error",
+            title: "Surgió un error",
+            text: `${err.response.data}`,
+        })
+        dispatch(logoutUser())
     }
 };
 
@@ -324,13 +350,13 @@ export const postPaciente = (user) => async (dispatch) => {
             (doctor) => doctor.mail
         );
         const emailsPac = Object.values(existingPaciente.data).map(
-            (pac) => pac.usuario.mail
+            (pac) => pac.mail
         );
         const arrayDniDoc = Object.values(existingDoctor.data).map(
             (doctor) => doctor.dni
         );
         const arrayDniPac = Object.values(existingPaciente.data).map(
-            (pac) => pac.usuario.dni
+            (pac) => pac.dni
         );
         const dniIngresado = parseInt(user.dni);
 
@@ -412,7 +438,12 @@ export const postPaciente = (user) => async (dispatch) => {
                 payload: res.data,
             });
         } catch (err) {
-            alert(err.response.data);
+            Swal.fire({
+                icon: "error",
+                title: "Surgió un error",
+                text: `${err.response.data}`,
+            })
+            dispatch(logoutUser())
         }
     
     }
@@ -429,21 +460,28 @@ export const postPaciente = (user) => async (dispatch) => {
                 payload: res.data,
             });
         } catch (err) {
-            alert(err.response.data);
+            Swal.fire({
+                icon: "error",
+                title: "Surgió un error",
+                text: `${err.response.data}`,
+            })
+            dispatch(logoutUser())
         }
     }
 
 
 ///////////////////////////////// ESPECIALIDADES //////////////////////////////////////
 
-    export const postEspecialidad = (especialidad, image) => async (dispatch) => {
+    export const postEspecialidad = (especialidad, image, token) => async (dispatch) => {
         try {
             const res = await axios.post(
                 `${URL_actions}/especialidad/post`,
                 {
                     especialidad,
                     image
-                }
+                }, { headers: {
+                    'Authorization': `Bearer ${token}`
+                }}
             );
             dispatch({
                 type: POST_ESPECIALIDAD,
@@ -452,9 +490,15 @@ export const postPaciente = (user) => async (dispatch) => {
             Swal.fire({
                 icon: "success",
                 title: "Registro Especialidad Exitoso!",
-            });}
+            })
+        }
             catch(err) {
-                console.log(err)
+                Swal.fire({
+                    icon: "error",
+                    title: "Surgió un error",
+                    text: `${err.response.data}`,
+                })
+                dispatch(logoutUser())
             }
         
     }
@@ -473,35 +517,56 @@ export const postPaciente = (user) => async (dispatch) => {
     
     }
 
-    export const patchEspecialidad = (id, image) => async (dispatch) => {
+    export const patchEspecialidad = (id, image, token) => async (dispatch) => {
         try {
             const res = await axios.patch(
                 `${URL_actions}/especialidad/patch/${id}`,
-                {image}
+                {image}, { headers: {
+                    'Authorization': `Bearer ${token}`
+                }}
             );
             dispatch({
                 type: PATCH_ESPECIALIDAD,
                 payload: res.data,
             });
-            Swal.fire({
-                icon: "success",
-                title: "Se agregó la nueva imagen!",
-            });
+            Swal.fire(
+                    "Actualizada!",
+                    "Has actualizado la imagen de esta especialidad.",
+                    "success"
+                )
+            ;
         } catch (err) {
-            console.log(err);
+            Swal.fire({
+                icon: "error",
+                title: "Surgió un error",
+                text: `${err.response.data}`,
+            })
+            dispatch(logoutUser())
         }
     }
 
-    export const deleteEspecialidad = (id) => async (dispatch) => {
+    export const deleteEspecialidad = (id, token) => async (dispatch) => {
         try {
             const res = await axios.delete(
-                `${URL_actions}/especialidad/delete/${id}`
+                `${URL_actions}/especialidad/delete/${id}`, { headers: {
+                    'Authorization': `Bearer ${token}`
+                }}
             );
             dispatch({
                 type: DELETE_ESPECIALIDAD,
                 payload: res.data,
             });
+            Swal.fire(
+                "Eliminada!",
+                "Has eliminado esta especialidad.",
+                "success"
+            );
         } catch (err) {
-            console.log(err);
+            Swal.fire({
+                icon: "error",
+                title: "Surgió un error",
+                text: `${err.response.data}`,
+            })
+            dispatch(logoutUser())
         }
     }
