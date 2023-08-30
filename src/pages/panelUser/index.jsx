@@ -39,8 +39,10 @@ export const PanelUser = () => {
 
 
     useEffect(() => {
-        dispatch(getTurnos(token))
-        dispatch(getEspecialidades())
+        if(user){
+            dispatch(getTurnos(token))
+            dispatch(getEspecialidades())
+        }
     },[])
 
     const swalWithBootstrapButtons = Swal.mixin({
@@ -122,7 +124,7 @@ export const PanelUser = () => {
 
     return (
         <div className="panelUser">
-        {!user &&<h2 className="panelUserDeslog">Debe ingresar con su cuenta</h2>}
+        {!user &&<h2 className="panelUserDeslog"><a href="#/Join">Debe ingresar con su cuenta</a></h2>}
             {user &&<div>
                 <div className="panelUser-column">
                     <img
