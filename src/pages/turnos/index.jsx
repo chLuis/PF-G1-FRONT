@@ -78,6 +78,9 @@ export const Turnos = () => {
                 title: 'FECHA: datos incorrectos!',
                 text: 'El turno debe ser solicitado 24 horas antes.',
               })
+              setTimeout(() => {
+                window.location.reload();
+              }, 2500)
               return setTurnoEnviado(!turnoEnviado)
         }
         if (fechaDate > maxDate) {
@@ -86,6 +89,9 @@ export const Turnos = () => {
                 title: 'FECHA: datos incorrectos!',
                 text: 'La fecha no puede ser posterior a 30 días a partir de hoy.',
             });
+            setTimeout(() => {
+              window.location.reload();
+            }, 2500)
             return setTurnoEnviado(!turnoEnviado)
         }
         const turno = {
@@ -93,7 +99,6 @@ export const Turnos = () => {
             especialidad: especialidadSeleccionadaInput,
             nombreDoctor: medico,
             dniDoctor: Number(medicoDNI),
-            //dniPaciente: Number(dni),
             fecha: fecha,
             horario: hora,
             motivo: motivo,
