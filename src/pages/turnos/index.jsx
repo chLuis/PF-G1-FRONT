@@ -35,7 +35,10 @@ export const Turnos = () => {
     const especialidadesDoctorAprobado = [...especialidadArray]
 
     useEffect(() => {
-        dispatch(getTurnos(token));
+        console.log(user)
+        if(user){
+            dispatch(getTurnos(token));
+        }
     }, [user]);
 
     function handleMedic(e) {
@@ -64,7 +67,6 @@ export const Turnos = () => {
             ? (idDoctorElegido = doctors[i].dni)
             : null
     );
-
     function turnoSet(e) {
         setTurnoEnviado(!turnoEnviado)
         e.preventDefault();
@@ -77,8 +79,8 @@ export const Turnos = () => {
                 icon: 'error',
                 title: 'FECHA: datos incorrectos!',
                 text: 'El turno debe ser solicitado 24 horas antes.',
-              })
-              return setTurnoEnviado(!turnoEnviado)
+            })
+            return setTurnoEnviado(false)
         }
         if (fechaDate > maxDate) {
             Swal.fire({
@@ -86,14 +88,13 @@ export const Turnos = () => {
                 title: 'FECHA: datos incorrectos!',
                 text: 'La fecha no puede ser posterior a 30 días a partir de hoy.',
             });
-            return setTurnoEnviado(!turnoEnviado)
+            return setTurnoEnviado(false)
         }
         const turno = {
             dniPaciente: dni,
             especialidad: especialidadSeleccionadaInput,
             nombreDoctor: medico,
             dniDoctor: Number(medicoDNI),
-            //dniPaciente: Number(dni),
             fecha: fecha,
             horario: hora,
             motivo: motivo,
@@ -121,7 +122,7 @@ export const Turnos = () => {
 
     return (
         <div className="turnos form-wrapper">
-            {!user && <h2 className="formularioNoLog"><a href="/Join">Inicia Sesión para solicitar un turno</a></h2>}
+            {!user && <h2 className="formularioNoLog"><a href="#/Join">Inicia Sesión para solicitar un turno</a></h2>}
             {user &&<form className="formularioTurnos" onSubmit={turnoSet}>
                 <h2>Solicitar Turno</h2>
                 <div className="input-group">

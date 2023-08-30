@@ -102,12 +102,10 @@ export const MostrarUsuarios = () => {
                                 </span>
                                 </div>
                                 {listUsersShow && (
-                                    <>
-                                        {users?.map((user, i) =>
-                                                <div
-                                                    key={i}
-                                                    className="doctorToApprove"
-                                                >
+                                    <>  
+                                        <h2>Médicos</h2>
+                                        {users?.filter(user => user.medico === 'MEDICO').map((user, i) =>
+                                                <div key={i} className="doctorToApprove">
                                                     <span>
                                                         {user.apellido}{" "}
                                                         {user.nombre} - {" "}
@@ -117,14 +115,26 @@ export const MostrarUsuarios = () => {
                                                         DNIº {user.dni}
                                                     </span>
                                                     <span className="btn-manage-doc">
-                                                        <button
-                                                            className="btn-delete-admin"
-                                                            onClick={() =>
-                                                                deleteUserSelected(
-                                                                    user
-                                                                )
-                                                            }
-                                                        >
+                                                        <button className="btn-delete-admin" onClick={() => deleteUserSelected(user)}>
+                                                            Eliminar
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                        )}
+                                        <h2>Pacientes</h2>
+                                        {users?.filter(user => user.medico === 'PACIENTE').map((user, i) =>
+                                            
+                                                <div key={i} className="doctorToApprove">
+                                                    <span>
+                                                        {user.apellido}{" "}
+                                                        {user.nombre} - {" "}
+                                                        {user.medico}
+                                                    </span>
+                                                    <span>
+                                                        DNIº {user.dni}
+                                                    </span>
+                                                    <span className="btn-manage-doc">
+                                                        <button className="btn-delete-admin" onClick={() => deleteUserSelected(user)}>
                                                             Eliminar
                                                         </button>
                                                     </span>
