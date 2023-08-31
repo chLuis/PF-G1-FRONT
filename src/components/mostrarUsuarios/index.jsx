@@ -103,7 +103,7 @@ export const MostrarUsuarios = () => {
                                 </div>
                                 {listUsersShow && (
                                     <>  
-                                        <h2>Médicos</h2>
+                                        <h5>Médicos:</h5>
                                         {users?.filter(user => user.medico === 'MEDICO').map((user, i) =>
                                                 <div key={i} className="doctorToApprove">
                                                     <span>
@@ -121,7 +121,7 @@ export const MostrarUsuarios = () => {
                                                     </span>
                                                 </div>
                                         )}
-                                        <h2>Pacientes</h2>
+                                        <h5>Pacientes:</h5>
                                         {users?.filter(user => user.medico === 'PACIENTE').map((user, i) =>
                                             
                                                 <div key={i} className="doctorToApprove">
