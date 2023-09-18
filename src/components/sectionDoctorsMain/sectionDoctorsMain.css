@@ -134,4 +134,15 @@
   .sectionDoctors {
     margin: 0px;
   }
+  .especialidades-title{
+    font-size: 2.2rem;
+  }
+}
+@media (max-width:310px){
+  .especialidades-title{
+    font-size: 2rem;
+  }
+  .sectionDoctors{
+    scale: 0.8;
+  }
 }

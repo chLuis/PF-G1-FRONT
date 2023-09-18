@@ -19,12 +19,16 @@
     position: relative;
     max-width: 85dvw;
     margin: 3px !important;
-    padding: 0 !important;
+    padding: 2px !important;
     line-height: 34px;
     display: grid;
     grid-template-columns: 4fr 0.5fr;
     border-bottom: 1px solid black;
     gap: 4px;
+    & p {
+        padding: 0px;
+        margin: 0px;
+    }
 }
 .turnos-panel-show p {
     padding-inline: 6px;

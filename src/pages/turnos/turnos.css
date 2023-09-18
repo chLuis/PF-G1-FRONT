@@ -97,3 +97,10 @@ button:disabled{
     user-select: none;
     background-color: gray;
 }
+
+@media (max-width: 350px) {
+    .formularioTurnos{
+        width: 98dvw;
+        overflow: hidden !important;
+    }
+}

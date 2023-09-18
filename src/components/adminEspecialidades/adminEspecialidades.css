@@ -29,6 +29,7 @@
     justify-content: center;
     flex-wrap: wrap;
     gap: 10px;
+    width: 100% !important;
 }
 .div-add-especialidades-input label{
     width: 100px;
@@ -49,7 +50,18 @@
     transition: 0.25s;
     border-radius: 8px !important;
 }
-.btn-approve-admin:hover {
+.btn-approve-admin-add{
+    background-color: rgb(0, 107, 0) !important;
+    width: 86px;
+    height: 36px;
+    align-self: center;
+    display: grid;
+    place-content: center;
+    transition: 0.25s;
+    border-radius: 8px !important;
+}
+.btn-approve-admin:hover,
+.btn-approve-admin-add:hover {
     background-color: rgb(0, 154, 0) !important;
 }
 .tooltipPanel {
@@ -99,10 +111,12 @@
     background-color: rgb(140, 140, 140);
 }
 .span-especialidades {
-    width: 160px !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    padding-inline: 2px;
 }
 .btn-update-img{
-    min-width: 110px;
+    width: 110px;
     height: 38px;
     align-self: center;
     background-color: rgb(0, 43, 143) !important;
@@ -112,11 +126,12 @@
 .btn-update-img:hover{
     background-color: rgb(4, 72, 232) !important;
 }
-.btn-delete-admin{
+.btn-delete-admin-esp{
     background-color: red !important;
     width: 94px;
     height: 38px;
     align-self: center !important;
+    border-radius: 10px !important;
 }
 .div-update-img-especialidades{
     position: fixed;
@@ -128,7 +143,7 @@
     left: 16%;
     right: 16%;
     max-width: 65dvw;
-    background-color: black !important;
+    background-color: rgba(0, 0, 0, 0.936) !important;
     height: 80dvh !important;
     z-index: 4;
 }
@@ -137,7 +152,7 @@
     text-align: center;
 }
 .div-update-img-especialidades label {
-    font-size: 2rem;
+    font-size: 1.8rem;
     display: flex;
     justify-content: center;
     align-items: end;
@@ -160,4 +175,36 @@
 
 .btn-div-update-img .cancelar-img {
     background-color: red;
+}
+.btn-min-width{
+    display: none;
+}
+.btn-normal-width{
+    display: inline;
+}
+@media (max-width: 550px){
+    .btn-min-width{
+        display: block;
+    }
+    .btn-normal-width{
+        display: none;
+    }
+    .btn-delete-admin-esp{
+        width: 60px !important;
+        height: 38px;
+        margin: 0 !important;
+        padding: 0 !important;
+        align-self: center !important;
+    }
+    .btn-update-img{
+        width: 60px !important;
+        height: 38px;
+        margin: 0 !important;
+        padding: 0 !important;
+        align-self: center !important;
+    }
+    .div-update-img-especialidades{
+        max-width: fit-content;
+        left: 0;
+    }
 }

@@ -77,14 +77,15 @@ export const BuscarTurnos = () => {
                         <span className="tooltipPanel">
                             Motivo de la consulta: {turno.motivo}
                         </span>
-                        Fecha: {turno.fecha.split("T")[0]}, Hs: {turno.horario}
-                        :00 Espec.: {turno.especialidad} - Dr.{" "}
-                        {turno.doctorNombre} - Paciente: {turno.pacienteNombre}
+                        <span>
+                        <p>- Fecha: {turno.fecha.split("T")[0]}, Hs: {turno.horario}:00</p>
+                        <p>- Espec.: {turno.especialidad} - Dr.{" "} {turno.doctorNombre}</p>
+                        <p>- Paciente: {turno.pacienteNombre}</p></span>
                         <button
                             className="btn-delete-admin"
                             onClick={() => borrarTurno(turno, turno.fecha)}
                         >
-                            Cancelar
+                            <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                         </button>{" "}
                     </div>
                 ) : null
