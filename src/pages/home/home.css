@@ -150,5 +150,14 @@
       font-size: 18px;
     }
   }
+  @media (max-width: 350px) {
+    .gallery > img {
+      width:200px;
+    }
+    .letras-in,
+    .letras-static {
+      font-size: 15px;
+    }
+  }
 
 

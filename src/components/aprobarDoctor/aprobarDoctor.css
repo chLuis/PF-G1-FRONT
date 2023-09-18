@@ -15,14 +15,22 @@
     padding-inline: 4px;
 }
 .doctorToApprove{
-    max-width: 85dvw;
+    max-width: 85dvw !important;
     margin: 3px !important;
     padding: 0 !important;
     line-height: 34px;
     display: grid;
-    grid-template-columns: 2fr 1.2fr 0.5fr;
+    grid-template-columns: 50% 20% 30% !important;
     border-bottom: 1px solid black;
     gap: 4px;
+    overflow: hidden;
+    & span {
+        padding: 0px !important;
+        & i {
+            font-size: 16px;
+            overflow: visible !important;
+       }
+    }
 }
 .doctorToApprove:hover{
     cursor: pointer;
@@ -63,9 +71,31 @@
     display: flex;
     width: 100% !important;
 }
-@media (max-width: 620px){
+@media (max-width: 550px){
 .btn-div-approve{
     display: flex;
     flex-direction: column;
     width: 100% !important;
-}}
+}
+.btn-delete-admin{
+    width: 45px !important;
+    padding: 0 !important;
+}
+.btn-approve-admin,
+.btn-disapprove-admin{
+    width: 45px !important;
+}
+.doctorToApprove{
+    font-size: 11px;
+}
+.div-btn-showAll-and-input{
+    place-items: center;
+    & button {
+        scale: 0.8;
+    }
+    & button:hover {
+        width: 100px;
+    }
+}
+
+}
