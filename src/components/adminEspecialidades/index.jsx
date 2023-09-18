@@ -23,6 +23,7 @@ export const AdminEspecialidades = () => {
     const [especialidadUpdate, setEspecialidadUpdate] = useState(""); // Escribe el nombre de la especialidad a modificar en label
     const [especialidadImg, setEspecialidadImg] = useState(""); // Input de la nueva img para la especialidad seleccionada
     const [idEspecialidad, setIdEspecialidad] = useState(""); // Id de la especialidad seleccionada para patch img
+    const [btnNewEspecialidad, setBtnNewEspecialidad] = useState(true); // Id de la especialidad seleccionada para patch img
 
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -77,6 +78,12 @@ export const AdminEspecialidades = () => {
     }
 
     function manejarNuevaEspecialidad(e) {
+        console.log(e.target.value.length)
+        if(e.target.value.length < 3) {
+            setBtnNewEspecialidad(true)
+        } else {
+            setBtnNewEspecialidad(false)
+        }
         let especialidad = primeraMayusRestoMinus(e.target.value);
         setNuevaEspecialidad(especialidad);
     }
@@ -85,6 +92,13 @@ export const AdminEspecialidades = () => {
     }
 
     async function agregarEspecialidad() {
+        if(imagenNuevaEspecialidad === ""){
+            swalWithBootstrapButtons.fire(
+                "Acción cancelada",
+                "Debe incluir un enlace para una imagen",
+                "info"
+            )
+        } else {
         swalWithBootstrapButtons
             .fire({
                 title: "¿Estas seguro?",
@@ -114,7 +128,7 @@ export const AdminEspecialidades = () => {
                     );
                 }
             });
-    }
+        }}
 
     //////// Cambiar imagen de la especialidad //////////
     function editImageEsp(id, espec, img) {
@@ -166,6 +180,9 @@ export const AdminEspecialidades = () => {
                         <input
                             placeholder="Neurología..."
                             onChange={manejarNuevaEspecialidad}
+                            type="text"
+                            maxLength={20}
+                            minLength={3}
                         ></input>
                     </div>
                     <div className="div-add-especialidades-input">
@@ -177,7 +194,8 @@ export const AdminEspecialidades = () => {
                     </div>
                     <button
                         onClick={agregarEspecialidad}
-                        className="btn-approve-admin"
+                        className="btn-approve-admin-add"
+                        disabled={btnNewEspecialidad}
                     >
                         Agregar
                     </button>
@@ -209,7 +227,7 @@ export const AdminEspecialidades = () => {
                         }
                         className="btn-update-img"
                     >
-                        <i className="fa-regular fa-pen-to-square"></i> imagen
+                        <span className="btn-min-width"><i className="fa-regular fa-pen-to-square"></i></span> <span className="btn-normal-width">Imagen</span>
                     </button>
                     <button
                         onClick={() =>
@@ -218,9 +236,9 @@ export const AdminEspecialidades = () => {
                                 especialidad.especialidad
                             )
                         }
-                        className="btn-delete-admin"
+                        className="btn-delete-admin-esp"
                     >
-                        Eliminar
+                        <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                     </button>
                 </div>
             ))}
@@ -234,7 +252,7 @@ export const AdminEspecialidades = () => {
                     ></input>
                     <div className="btn-div-update-img">
                         <button
-                            className="btn-approve-admin"
+                            className="btn-approve-admin-add"
                             onClick={updateImageEsp}
                         >
                             Aceptar

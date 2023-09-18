@@ -178,7 +178,8 @@ export const AprobarDoctor = () => {
                                             changeAprobado(doctor, true)
                                         }
                                     >
-                                        Aprobar
+                                    <span className="btn-min-width"><i className="fa-regular fa-pen-to-square"></i></span> <span className="btn-normal-width">Aprobar</span>
+                                        
                                     </button>
                                     <button
                                         className="btn-delete-admin"
@@ -186,7 +187,7 @@ export const AprobarDoctor = () => {
                                             deleteDoctorSelected(doctor)
                                         }
                                     >
-                                        Eliminar
+                                        <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                                     </button>
                                     </div>
                                 </span>
@@ -211,13 +212,13 @@ export const AprobarDoctor = () => {
                                     className="btn-approve-admin"
                                     onClick={() => changeAprobado(doctor, true)}
                                 >
-                                    Aprobar
+                                    <span className="btn-min-width"><i className="fa-regular fa-pen-to-square"></i></span> <span className="btn-normal-width">Aprobar</span>
                                 </button>
                                 <button
                                     className="btn-delete-admin"
                                     onClick={() => deleteDoctorSelected(doctor)}
                                 >
-                                    Eliminar
+                                    <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                                 </button>
                                 </div>
                             </span>
@@ -264,7 +265,8 @@ export const AprobarDoctor = () => {
                                                 changeAprobado(doctor, false)
                                             }
                                         >
-                                            Quitar
+                                        <span className="btn-min-width"><i className="fa-regular fa-pen-to-square"></i></span> <span className="btn-normal-width">Quitar</span>
+                                            
                                         </button>
                                         <button
                                             className="btn-delete-admin"
@@ -272,7 +274,7 @@ export const AprobarDoctor = () => {
                                                 deleteDoctorSelected(doctor)
                                             }
                                         >
-                                            Eliminar
+                                            <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                                         </button>
                                         </div>
                                     </span>
@@ -299,7 +301,7 @@ export const AprobarDoctor = () => {
                                             changeAprobado(doctor, false)
                                         }
                                     >
-                                        Quitar
+                                        <span className="btn-min-width"><i className="fa-regular fa-pen-to-square"></i></span> <span className="btn-normal-width">Quitar</span>
                                     </button>
                                     <button
                                         className="btn-delete-admin"
@@ -307,7 +309,7 @@ export const AprobarDoctor = () => {
                                             deleteDoctorSelected(doctor)
                                         }
                                     >
-                                        Eliminar
+                                        <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                                     </button>
                                     </div>
                                 </span>

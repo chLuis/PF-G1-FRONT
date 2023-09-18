@@ -103,7 +103,7 @@ export const MostrarUsuarios = () => {
                                 </div>
                                 {listUsersShow && (
                                     <>  
-                                        <h2>Médicos</h2>
+                                        <h5>Médicos:</h5>
                                         {users?.filter(user => user.medico === 'MEDICO').map((user, i) =>
                                                 <div key={i} className="doctorToApprove">
                                                     <span>
@@ -116,12 +116,12 @@ export const MostrarUsuarios = () => {
                                                     </span>
                                                     <span className="btn-manage-doc">
                                                         <button className="btn-delete-admin" onClick={() => deleteUserSelected(user)}>
-                                                            Eliminar
+                                                        <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                                                         </button>
                                                     </span>
                                                 </div>
                                         )}
-                                        <h2>Pacientes</h2>
+                                        <h5>Pacientes:</h5>
                                         {users?.filter(user => user.medico === 'PACIENTE').map((user, i) =>
                                             
                                                 <div key={i} className="doctorToApprove">
@@ -135,7 +135,7 @@ export const MostrarUsuarios = () => {
                                                     </span>
                                                     <span className="btn-manage-doc">
                                                         <button className="btn-delete-admin" onClick={() => deleteUserSelected(user)}>
-                                                            Eliminar
+                                                        <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                                                         </button>
                                                     </span>
                                                 </div>
@@ -166,7 +166,7 @@ export const MostrarUsuarios = () => {
                                                                 )
                                                             }
                                                         >
-                                                            Eliminar
+                                                            <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                                                         </button>
                                                     </span>
                                                 </div>

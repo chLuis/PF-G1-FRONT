@@ -107,3 +107,14 @@
 .fueraDeFecha{
     background-color: black !important;
 }
+
+
+
+@media (max-width: 550px){
+    .btn-delete-admin-vencido{
+        user-select: none;
+        width: 45px !important;
+        height: 38px;
+        align-self: center !important;
+    }
+}

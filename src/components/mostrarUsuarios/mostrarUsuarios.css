@@ -30,7 +30,8 @@
 .btn-manage-doc{
     display: flex;
     margin: 1px 3px;
-    gap: 2px
+    gap: 2px;
+    place-self: center;
 }
 .btn-delete-admin{
     background-color: red !important;
