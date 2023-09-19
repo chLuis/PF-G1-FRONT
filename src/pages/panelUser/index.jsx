@@ -156,7 +156,7 @@ export const PanelUser = () => {
                                 ?<div className="turnos-panel-show fueraDeFecha" key={i}>
                                     <span className="tooltipPanel">Motivo de la consulta: {turno.motivo}</span>
                                     <p>{turno.fecha.split("T")[0]} (mm/dd), Hs: {turno.horario}:00 Espec.: {turno.especialidad} -  Dr. {turno.doctorNombre} </p>
-                                    <button className="btn-delete-admin-vencido"><span className="btn-min-width"><i class="fa-solid fa-circle-minus"></i></span><span className="btn-normal-width">Eliminar</span></button>
+                                    <button className="btn-delete-admin-vencido"><span className="btn-min-width"><i className="fa-solid fa-circle-minus"></i></span><span className="btn-normal-width">Eliminar</span></button>
                                 </div>
                                 :<div className="turnos-panel-show" key={i}>
                                     <span className="tooltipPanel">Motivo de la consulta: {turno.motivo}</span>

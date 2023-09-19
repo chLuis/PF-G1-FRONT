@@ -202,7 +202,7 @@ export const RegisterDoc = () => {
                         <label>Apellido</label>
                     </div>
                     <div className="input-group">
-                        <input type="text" value={dni} onChange={(e) => setDni(e.target.value)} required/>
+                        <input type="number" value={dni} onChange={(e) => setDni(e.target.value)} required/>
                         <label>DNI</label>
                     </div>
                     <div className="input-group">
@@ -210,7 +210,7 @@ export const RegisterDoc = () => {
                         <label>Dirección</label>
                     </div>
                     <div className="input-group">
-                        <input type="text" value={telefono} onChange={(e) => setTelefono(e.target.value)} required/>
+                        <input type="number" value={telefono} onChange={(e) => setTelefono(e.target.value)} required/>
                         <label>Teléfono</label>
                     </div>
                     <div className="input-group">
@@ -230,7 +230,7 @@ export const RegisterDoc = () => {
                         <label>Fecha de Nacimiento</label>
                     </div>
                     <div className="input-group">
-                        <input type="text" value={matricula} onChange={(e) => setmatricula(e.target.value)} required/>
+                        <input type="number" value={matricula} onChange={(e) => setmatricula(e.target.value)} required/>
                         <label>Nro de Matricula</label>
                     </div>
                     <div className='selectSpec'>
