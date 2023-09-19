@@ -74,6 +74,7 @@
 @media screen and (max-width: 1020px) {
     .team {
         display: flex;
+        justify-content: center;
         flex-direction: column;
     }
     .avatar-container{
@@ -81,7 +82,7 @@
         height: 400px;
     }
     .aboutus-content{
-        height: 1350px;
+        height: 90%;
     }
 }   
 @media screen and (max-width: 750px) {
@@ -89,30 +90,30 @@
         margin: 10px;
     }
     .avatar-container{
-        width: 300px;
-        height: 300px;
+        width: 50vw;
+        height: 50vw;
     }
-}
-@media screen and (max-width: 600px) {
-    .avatar-container{
-        width: 250px;
-        height: 250px;
+    .aboutus p{
+        font-size: 3vw;
+        width: 100%;
     }
-}
-@media screen and (max-width: 520px) {
     .aboutus h1{
-        font-size: 1.5em;
+        font-size: 6vw;
     }
-    .aboutus p{
-        font-size: 1em;
+    .team h2{
+        font-size: 5vw;
     }
 }
+
 @media screen and (max-width: 350px) {
-    .avatar-container{
-        width: 150px;
-        height: 150px;
-    }
     .aboutus p{
-        font-size: .8em;
+        font-size: 4vw;
+        width: 100%;
+    }
+    .aboutus h1{
+        font-size: 7vw;
+    }
+    .team h2{
+        font-size: 5vw;
     }
 }
