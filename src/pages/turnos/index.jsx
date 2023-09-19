@@ -35,7 +35,6 @@ export const Turnos = () => {
     const especialidadesDoctorAprobado = [...especialidadArray]
 
     useEffect(() => {
-        console.log(user)
         if(user){
             dispatch(getTurnos(token));
         }
