@@ -78,7 +78,6 @@ export const AdminEspecialidades = () => {
     }
 
     function manejarNuevaEspecialidad(e) {
-        console.log(e.target.value.length)
         if(e.target.value.length < 3) {
             setBtnNewEspecialidad(true)
         } else {
