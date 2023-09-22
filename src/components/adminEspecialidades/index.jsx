@@ -23,7 +23,8 @@ export const AdminEspecialidades = () => {
     const [especialidadUpdate, setEspecialidadUpdate] = useState(""); // Escribe el nombre de la especialidad a modificar en label
     const [especialidadImg, setEspecialidadImg] = useState(""); // Input de la nueva img para la especialidad seleccionada
     const [idEspecialidad, setIdEspecialidad] = useState(""); // Id de la especialidad seleccionada para patch img
-    const [btnNewEspecialidad, setBtnNewEspecialidad] = useState(true); // Id de la especialidad seleccionada para patch img
+    const [esImagenValida, setEsImagenValida] = useState(false);
+
 
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -72,32 +73,51 @@ export const AdminEspecialidades = () => {
             });
     }
 
+
+    function esUrlImagenValida(url) {
+        // Expresión para verificar si la URL es de una imagen válida
+        const formatoImagen = /^https?:\/\/.*\.(jpeg|jpg|gif|png|svg)$/i;
+        return formatoImagen.test(url);
+    }
+    
+
+      manejarNuevaImagen
     //////////////// Nueva especialidad /////////////////
     function primeraMayusRestoMinus(str) {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
     }
 
     function manejarNuevaEspecialidad(e) {
-        if(e.target.value.length < 3) {
-            setBtnNewEspecialidad(true)
-        } else {
-            setBtnNewEspecialidad(false)
-        }
         let especialidad = primeraMayusRestoMinus(e.target.value);
         setNuevaEspecialidad(especialidad);
     }
     function manejarNuevaImagen(e) {
         setImagenNuevaEspecialidad(e.target.value);
+        setEsImagenValida(esUrlImagenValida(e.target.value))
     }
 
     async function agregarEspecialidad() {
+        if(nuevaEspecialidad.length < 3){
+            return swalWithBootstrapButtons.fire(
+                "Acción cancelada",
+                "La especialidad debe tener al menos 3 caracteres",
+                "info"
+            )
+        }
         if(imagenNuevaEspecialidad === ""){
-            swalWithBootstrapButtons.fire(
+            return swalWithBootstrapButtons.fire(
                 "Acción cancelada",
                 "Debe incluir un enlace para una imagen",
                 "info"
             )
-        } else {
+        }
+        if(esImagenValida === false){
+            return swalWithBootstrapButtons.fire(
+                "Acción cancelada",
+                "Debe ingresar un enlace valido de imagen",
+                "info"
+            )}
+
         swalWithBootstrapButtons
             .fire({
                 title: "¿Estas seguro?",
@@ -118,7 +138,9 @@ export const AdminEspecialidades = () => {
                         )
                     );
                     dispatch(getEspecialidades());
-
+                    window.location.reload()
+                    setNuevaEspecialidad("");
+                    setImagenNuevaEspecialidad("");
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
                         "Acción cancelada",
@@ -127,8 +149,8 @@ export const AdminEspecialidades = () => {
                     );
                 }
             });
-        }}
-
+        }
+        let volverACero
     //////// Cambiar imagen de la especialidad //////////
     function editImageEsp(id, espec, img) {
         setEditImage(!editImage);
@@ -177,6 +199,8 @@ export const AdminEspecialidades = () => {
                     <div className="div-add-especialidades-input">
                         <label>Especialidad:</label>
                         <input
+                        value={volverACero}
+                        required={true}
                             placeholder="Neurología..."
                             onChange={manejarNuevaEspecialidad}
                             type="text"
@@ -189,12 +213,12 @@ export const AdminEspecialidades = () => {
                         <input
                             placeholder="https://..."
                             onChange={manejarNuevaImagen}
+                            maxLength={180}
                         ></input>
                     </div>
                     <button
                         onClick={agregarEspecialidad}
                         className="btn-approve-admin-add"
-                        disabled={btnNewEspecialidad}
                     >
                         Agregar
                     </button>
