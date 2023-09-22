@@ -138,9 +138,11 @@ export const AdminEspecialidades = () => {
                         )
                     );
                     dispatch(getEspecialidades());
-                    window.location.reload()
                     setNuevaEspecialidad("");
                     setImagenNuevaEspecialidad("");
+                    setTimeout(() => {
+                        window.location.reload();
+                        }, 2000)
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
                         "Acción cancelada",
