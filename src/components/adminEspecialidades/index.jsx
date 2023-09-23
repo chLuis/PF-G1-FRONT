@@ -24,6 +24,7 @@ export const AdminEspecialidades = () => {
     const [especialidadImg, setEspecialidadImg] = useState(""); // Input de la nueva img para la especialidad seleccionada
     const [idEspecialidad, setIdEspecialidad] = useState(""); // Id de la especialidad seleccionada para patch img
     const [esImagenValida, setEsImagenValida] = useState(false);
+    const [esNuevaImagenValida, setEsNuevaImagenValida] = useState(false);
 
 
     const swalWithBootstrapButtons = Swal.mixin({
@@ -162,8 +163,22 @@ export const AdminEspecialidades = () => {
     }
     function manejarNuevaImagenUpdate(e) {
         setEspecialidadImg(e.target.value);
+        setEsNuevaImagenValida(esUrlImagenValida(e.target.value))
     }
     function updateImageEsp() {
+        if(especialidadImg === ""){
+            return swalWithBootstrapButtons.fire(
+                "Acción cancelada",
+                "Debe incluir un enlace para una imagen",
+                "info"
+            )
+        }
+        if(esNuevaImagenValida === false){
+            return swalWithBootstrapButtons.fire(
+                "Acción cancelada",
+                "Debe ingresar un enlace valido de imagen",
+                "info"
+            )}
         swalWithBootstrapButtons
             .fire({
                 title: "¿Estas seguro?",
@@ -273,6 +288,7 @@ export const AdminEspecialidades = () => {
                     <label>{especialidadUpdate}</label>
                     <input
                         placeholder={especialidadImg}
+                        maxLength={180}
                         onChange={manejarNuevaImagenUpdate}
                     ></input>
                     <div className="btn-div-update-img">

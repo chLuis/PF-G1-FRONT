@@ -208,7 +208,7 @@ export const Turnos = () => {
                     </div>
                 )}
                 {hora &&<div className="input-group">
-                    <input type="text" required onChange={handleMotivo} />
+                    <input type="text" required onChange={handleMotivo} maxLength={150}/>
                     <label>Motivo de la consulta</label>
                 </div>}
                 {!turnoEnviado &&<button type="submit" disabled={btnSolicitar}>Solicitar</button>}
