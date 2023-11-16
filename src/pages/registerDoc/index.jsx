@@ -194,27 +194,27 @@ export const RegisterDoc = () => {
                 <form onSubmit={handleSubmit}>
                     <h2>Registrarse como Doctor</h2>
                     <div className="input-group">
-                        <input type="text" value={nombre} onChange={(e) => setNombre(e.target.value)} required/>
+                        <input type="text" value={nombre} maxLength={30} onChange={(e) => setNombre(e.target.value)} required/>
                         <label>Nombre</label>
                     </div>
                     <div className="input-group">
-                        <input type="text" value={apellido} onChange={(e) => setApellido(e.target.value)} required/>
+                        <input type="text" value={apellido} maxLength={30} onChange={(e) => setApellido(e.target.value)} required/>
                         <label>Apellido</label>
                     </div>
                     <div className="input-group">
-                        <input type="text" value={dni} onChange={(e) => setDni(e.target.value)} required/>
+                        <input type="number" value={dni} onChange={(e) => setDni(e.target.value)} required/>
                         <label>DNI</label>
                     </div>
                     <div className="input-group">
-                        <input type="text" value={direccion} onChange={(e) => setDireccion(e.target.value)} required/>
+                        <input type="text" value={direccion} maxLength={50} onChange={(e) => setDireccion(e.target.value)} required/>
                         <label>Dirección</label>
                     </div>
                     <div className="input-group">
-                        <input type="text" value={telefono} onChange={(e) => setTelefono(e.target.value)} required/>
+                        <input type="number" value={telefono} onChange={(e) => setTelefono(e.target.value)} required/>
                         <label>Teléfono</label>
                     </div>
                     <div className="input-group">
-                        <input type="email" value={mail} onChange={(e) => setMail(e.target.value)} required/>
+                        <input type="email" value={mail} maxLength={30} onChange={(e) => setMail(e.target.value)} required/>
                         <label>Email</label>
                     </div>
                     <div className="input-group">
@@ -230,7 +230,7 @@ export const RegisterDoc = () => {
                         <label>Fecha de Nacimiento</label>
                     </div>
                     <div className="input-group">
-                        <input type="text" value={matricula} onChange={(e) => setmatricula(e.target.value)} required/>
+                        <input type="number" value={matricula} onChange={(e) => setmatricula(e.target.value)} required/>
                         <label>Nro de Matricula</label>
                     </div>
                     <div className='selectSpec'>
@@ -242,7 +242,7 @@ export const RegisterDoc = () => {
                         </select> 
                     </div>
                     <div className="input-group">
-                        <input type={showPassword1 ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required/>
+                        <input type={showPassword1 ? "text" : "password"} value={password} maxLength={20} onChange={(e) => setPassword(e.target.value)} required/>
                         <label>Contraseña</label>
                         <div className="Eye" onClick={() => setShowPassword1(!showPassword1)}>
                                         {showPassword1 ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" height={"1.5rem"}>
@@ -256,7 +256,7 @@ export const RegisterDoc = () => {
                                     </div>
                     </div>
                     <div className="input-group">
-                        <input type={showPassword2 ? "text" : "password"} value={passwordRepeat} onChange={(e) => setPasswordRepeat(e.target.value)} required/>
+                        <input type={showPassword2 ? "text" : "password"} maxLength={20} value={passwordRepeat} onChange={(e) => setPasswordRepeat(e.target.value)} required/>
                         <label>Confirmar Contraseña</label>
                         <div className="Eye" onClick={() => setShowPassword2(!showPassword2)}>
                                         {showPassword2 ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" height={"1.5rem"}>

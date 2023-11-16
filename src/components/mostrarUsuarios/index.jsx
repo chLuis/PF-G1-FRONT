@@ -116,7 +116,7 @@ export const MostrarUsuarios = () => {
                                                     </span>
                                                     <span className="btn-manage-doc">
                                                         <button className="btn-delete-admin" onClick={() => deleteUserSelected(user)}>
-                                                            Eliminar
+                                                        <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                                                         </button>
                                                     </span>
                                                 </div>
@@ -135,7 +135,7 @@ export const MostrarUsuarios = () => {
                                                     </span>
                                                     <span className="btn-manage-doc">
                                                         <button className="btn-delete-admin" onClick={() => deleteUserSelected(user)}>
-                                                            Eliminar
+                                                        <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                                                         </button>
                                                     </span>
                                                 </div>
@@ -166,7 +166,7 @@ export const MostrarUsuarios = () => {
                                                                 )
                                                             }
                                                         >
-                                                            Eliminar
+                                                            <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                                                         </button>
                                                     </span>
                                                 </div>

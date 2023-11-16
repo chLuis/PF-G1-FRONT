@@ -23,6 +23,9 @@ export const AdminEspecialidades = () => {
     const [especialidadUpdate, setEspecialidadUpdate] = useState(""); // Escribe el nombre de la especialidad a modificar en label
     const [especialidadImg, setEspecialidadImg] = useState(""); // Input de la nueva img para la especialidad seleccionada
     const [idEspecialidad, setIdEspecialidad] = useState(""); // Id de la especialidad seleccionada para patch img
+    const [esImagenValida, setEsImagenValida] = useState(false);
+    const [esNuevaImagenValida, setEsNuevaImagenValida] = useState(false);
+
 
     const swalWithBootstrapButtons = Swal.mixin({
         customClass: {
@@ -71,6 +74,15 @@ export const AdminEspecialidades = () => {
             });
     }
 
+
+    function esUrlImagenValida(url) {
+        // Expresión para verificar si la URL es de una imagen válida
+        const formatoImagen = /^https?:\/\/.*\.(jpeg|jpg|gif|png|svg)$/i;
+        return formatoImagen.test(url);
+    }
+    
+
+      manejarNuevaImagen
     //////////////// Nueva especialidad /////////////////
     function primeraMayusRestoMinus(str) {
         return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
@@ -82,9 +94,31 @@ export const AdminEspecialidades = () => {
     }
     function manejarNuevaImagen(e) {
         setImagenNuevaEspecialidad(e.target.value);
+        setEsImagenValida(esUrlImagenValida(e.target.value))
     }
 
     async function agregarEspecialidad() {
+        if(nuevaEspecialidad.length < 3){
+            return swalWithBootstrapButtons.fire(
+                "Acción cancelada",
+                "La especialidad debe tener al menos 3 caracteres",
+                "info"
+            )
+        }
+        if(imagenNuevaEspecialidad === ""){
+            return swalWithBootstrapButtons.fire(
+                "Acción cancelada",
+                "Debe incluir un enlace para una imagen",
+                "info"
+            )
+        }
+        if(esImagenValida === false){
+            return swalWithBootstrapButtons.fire(
+                "Acción cancelada",
+                "Debe ingresar un enlace valido de imagen",
+                "info"
+            )}
+
         swalWithBootstrapButtons
             .fire({
                 title: "¿Estas seguro?",
@@ -105,7 +139,11 @@ export const AdminEspecialidades = () => {
                         )
                     );
                     dispatch(getEspecialidades());
-
+                    setNuevaEspecialidad("");
+                    setImagenNuevaEspecialidad("");
+                    setTimeout(() => {
+                        window.location.reload();
+                        }, 2000)
                 } else if (result.dismiss === Swal.DismissReason.cancel) {
                     swalWithBootstrapButtons.fire(
                         "Acción cancelada",
@@ -114,8 +152,8 @@ export const AdminEspecialidades = () => {
                     );
                 }
             });
-    }
-
+        }
+        let volverACero
     //////// Cambiar imagen de la especialidad //////////
     function editImageEsp(id, espec, img) {
         setEditImage(!editImage);
@@ -125,8 +163,22 @@ export const AdminEspecialidades = () => {
     }
     function manejarNuevaImagenUpdate(e) {
         setEspecialidadImg(e.target.value);
+        setEsNuevaImagenValida(esUrlImagenValida(e.target.value))
     }
     function updateImageEsp() {
+        if(especialidadImg === ""){
+            return swalWithBootstrapButtons.fire(
+                "Acción cancelada",
+                "Debe incluir un enlace para una imagen",
+                "info"
+            )
+        }
+        if(esNuevaImagenValida === false){
+            return swalWithBootstrapButtons.fire(
+                "Acción cancelada",
+                "Debe ingresar un enlace valido de imagen",
+                "info"
+            )}
         swalWithBootstrapButtons
             .fire({
                 title: "¿Estas seguro?",
@@ -164,8 +216,13 @@ export const AdminEspecialidades = () => {
                     <div className="div-add-especialidades-input">
                         <label>Especialidad:</label>
                         <input
+                        value={volverACero}
+                        required={true}
                             placeholder="Neurología..."
                             onChange={manejarNuevaEspecialidad}
+                            type="text"
+                            maxLength={20}
+                            minLength={3}
                         ></input>
                     </div>
                     <div className="div-add-especialidades-input">
@@ -173,11 +230,12 @@ export const AdminEspecialidades = () => {
                         <input
                             placeholder="https://..."
                             onChange={manejarNuevaImagen}
+                            maxLength={180}
                         ></input>
                     </div>
                     <button
                         onClick={agregarEspecialidad}
-                        className="btn-approve-admin"
+                        className="btn-approve-admin-add"
                     >
                         Agregar
                     </button>
@@ -209,7 +267,7 @@ export const AdminEspecialidades = () => {
                         }
                         className="btn-update-img"
                     >
-                        <i className="fa-regular fa-pen-to-square"></i> imagen
+                        <span className="btn-min-width"><i className="fa-regular fa-pen-to-square"></i></span> <span className="btn-normal-width">Imagen</span>
                     </button>
                     <button
                         onClick={() =>
@@ -218,9 +276,9 @@ export const AdminEspecialidades = () => {
                                 especialidad.especialidad
                             )
                         }
-                        className="btn-delete-admin"
+                        className="btn-delete-admin-esp"
                     >
-                        Eliminar
+                        <span className="btn-min-width"><i className="fa-regular fa-trash-can"></i></span><span className="btn-normal-width">Eliminar</span>
                     </button>
                 </div>
             ))}
@@ -230,11 +288,12 @@ export const AdminEspecialidades = () => {
                     <label>{especialidadUpdate}</label>
                     <input
                         placeholder={especialidadImg}
+                        maxLength={180}
                         onChange={manejarNuevaImagenUpdate}
                     ></input>
                     <div className="btn-div-update-img">
                         <button
-                            className="btn-approve-admin"
+                            className="btn-approve-admin-add"
                             onClick={updateImageEsp}
                         >
                             Aceptar
