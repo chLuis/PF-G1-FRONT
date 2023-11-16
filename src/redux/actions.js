@@ -22,7 +22,7 @@ import {
 } from "./types";
 import Swal from "sweetalert2";
 
-const URL_actions = "https://pf-back-vd4v-dev.fl0.io" //  // "http://localhost:8080"
+const URL_actions = "https://pf-back-dev-hchm.4.us-1.fl0.io" //  // "http://localhost:8080"
 
 
 export const postDoctor = (user) => async (dispatch) => {
