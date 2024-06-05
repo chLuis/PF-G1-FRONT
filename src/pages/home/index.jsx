@@ -18,7 +18,7 @@ export const Home = () => {
                         alt="camillas"
                     />
                     <img
-                        src="https://www.karlstorz.com/static/file_pics/pic_editorial/es/CORP/3613741_rdax_800x553_80s.jpg"
+                        src="https://www.smilelife.org/images/smilelife/clinicas/smilelife_clinicas_gallery_fuenla03@2x.jpg"
                         alt="consultorio"
                     />
                     <img
